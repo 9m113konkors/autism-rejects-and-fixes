@@ -5,6 +5,7 @@ import autismclient.api.module.EnumSetting;
 import autismclient.api.module.IntSetting;
 import autismclient.modules.Module;
 import autismclient.modules.ModuleRegistry;
+import com.example.minimal.Tier;
 import net.minecraft.network.protocol.Packet;
 import net.minecraft.network.protocol.game.ServerboundAttackPacket;
 
@@ -62,7 +63,12 @@ public final class AutoWTapModule extends Module {
 
     @Override
     public String info() {
-        return chance.get() + "%";
+        return chance.get() + "% " + tier().label();
+    }
+
+    public static Tier tier() {
+        Module module = ModuleRegistry.get(ID);
+        return module instanceof AutoWTapModule m ? Tier.forChance(m.chance.get()) : Tier.CLOSET;
     }
 
     public static boolean active() {

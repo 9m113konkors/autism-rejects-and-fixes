@@ -1,0 +1,14 @@
+{
+  "required": true,
+  "package": "com.example.minimal.mixin",
+  "compatibilityLevel": "JAVA_25",
+  "client": [
+    "MinecraftMissTimeAccessor",
+    "PlayerReachMixin",
+    "VelocityMixin",
+    "VelocityMotionMixin"
+  ],
+  "injectors": {
+    "defaultRequire": 1
+  }
+}
