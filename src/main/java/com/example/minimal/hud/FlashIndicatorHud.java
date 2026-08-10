@@ -1,4 +1,4 @@
-package com.example.minimal.hud;
+package com.konkors.autismpvp.hud;
 
 import autismclient.api.hud.HudElementProvider;
 import net.minecraft.client.Minecraft;

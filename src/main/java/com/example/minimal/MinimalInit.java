@@ -1,4 +1,4 @@
-package com.example.minimal;
+package com.konkors.autismpvp;
 
 import net.fabricmc.api.ClientModInitializer;
 

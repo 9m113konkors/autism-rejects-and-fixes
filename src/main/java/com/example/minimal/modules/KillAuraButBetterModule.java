@@ -1,4 +1,4 @@
-package com.example.minimal.modules;
+package com.konkors.autismpvp.modules;
 
 import autismclient.api.module.BoolSetting;
 import autismclient.api.module.DoubleSetting;
@@ -8,8 +8,8 @@ import autismclient.modules.KillAuraModule;
 import autismclient.modules.Module;
 import autismclient.modules.ModuleRegistry;
 import autismclient.util.AutismKeyMappingBridge;
-import com.example.minimal.Tier;
-import com.example.minimal.mixin.MinecraftMissTimeAccessor;
+import com.konkors.autismpvp.Tier;
+import com.konkors.autismpvp.mixin.MinecraftMissTimeAccessor;
 import net.minecraft.network.protocol.game.ServerboundAttackPacket;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.entity.LivingEntity;
@@ -22,7 +22,7 @@ import java.util.Random;
 // those hits land as crits. KillAura keeps doing the aiming and rotation; this module's rate wins.
 public final class KillAuraButBetterModule extends Module {
 
-    public static final String ID = "autism-minimal-addon-template:killaura-better";
+    public static final String ID = "autismpvp:killaura-better";
     public static volatile long lastCritMs;
 
     private enum Phase { IDLE, JUMP }

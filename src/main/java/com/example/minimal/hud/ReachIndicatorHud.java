@@ -1,8 +1,8 @@
-package com.example.minimal.hud;
+package com.konkors.autismpvp.hud;
 
 import autismclient.api.hud.HudElementProvider;
-import com.example.minimal.MinimalAddon;
-import com.example.minimal.modules.ReachModule;
+import com.konkors.autismpvp.MinimalAddon;
+import com.konkors.autismpvp.modules.ReachModule;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Font;
 import net.minecraft.client.gui.GuiGraphicsExtractor;

@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "id": "autism-minimal-addon-template",
+  "id": "autismpvp",
   "version": "${version}",
   "name": "AUTISM PvP Addon",
   "description": "Sword PvP addon for AUTISM Client: Auto WTap, Auto JumpReset, Reach, Legit AutoTotem.",
@@ -18,14 +18,14 @@
   "environment": "client",
   "entrypoints": {
     "client": [
-      "com.example.minimal.MinimalInit"
+      "com.konkors.autismpvp.MinimalInit"
     ],
     "autism": [
-      "com.example.minimal.MinimalAddon"
+      "com.konkors.autismpvp.MinimalAddon"
     ]
   },
   "mixins": [
-    "autism-minimal-addon-template.mixins.json"
+    "autismpvp.mixins.json"
   ],
   "depends": {
     "java": ">=25",

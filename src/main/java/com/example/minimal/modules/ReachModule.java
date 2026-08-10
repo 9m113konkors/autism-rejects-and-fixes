@@ -1,13 +1,13 @@
-package com.example.minimal.modules;
+package com.konkors.autismpvp.modules;
 
 import autismclient.api.module.DoubleSetting;
 import autismclient.modules.Module;
 import autismclient.modules.ModuleRegistry;
-import com.example.minimal.Tier;
+import com.konkors.autismpvp.Tier;
 
 public final class ReachModule extends Module {
 
-    public static final String ID = "autism-minimal-addon-template:reach";
+    public static final String ID = "autismpvp:reach";
 
     // Up to 40 blocks so blatant modes are possible; servers still enforce their own limit.
     private final DoubleSetting reach = add(new DoubleSetting("reach", "Reach", 4.0, 3.0, 40.0, 0.1)

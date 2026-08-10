@@ -1,11 +1,11 @@
-package com.example.minimal.modules;
+package com.konkors.autismpvp.modules;
 
 import autismclient.api.module.BoolSetting;
 import autismclient.api.module.EnumSetting;
 import autismclient.api.module.IntSetting;
 import autismclient.modules.Module;
 import autismclient.modules.ModuleRegistry;
-import com.example.minimal.Tier;
+import com.konkors.autismpvp.Tier;
 import net.minecraft.network.protocol.Packet;
 import net.minecraft.network.protocol.game.ServerboundAttackPacket;
 
@@ -13,7 +13,7 @@ import java.util.Random;
 
 public final class AutoWTapModule extends Module {
 
-    public static final String ID = "autism-minimal-addon-template:auto-wtap";
+    public static final String ID = "autismpvp:auto-wtap";
     public static volatile long lastTapMs;
 
     public enum Mode {

@@ -1,9 +1,9 @@
-package com.example.minimal.modules;
+package com.konkors.autismpvp.modules;
 
 import autismclient.api.module.IntSetting;
 import autismclient.modules.Module;
 import autismclient.modules.ModuleRegistry;
-import com.example.minimal.Tier;
+import com.konkors.autismpvp.Tier;
 
 import java.util.Random;
 
@@ -11,7 +11,7 @@ import java.util.Random;
 // LivingEntity.knockback, after vanilla knockback resistance, so the game stays authoritative.
 public final class VelocityModule extends Module {
 
-    public static final String ID = "autism-minimal-addon-template:velocity";
+    public static final String ID = "autismpvp:velocity";
     public static volatile long lastKbMs;
 
     private static final Random ROLL = new Random();

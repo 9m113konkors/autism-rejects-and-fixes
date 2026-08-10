@@ -1,6 +1,6 @@
 {
   "required": true,
-  "package": "com.example.minimal.mixin",
+  "package": "com.konkors.autismpvp.mixin",
   "compatibilityLevel": "JAVA_25",
   "client": [
     "MinecraftMissTimeAccessor",

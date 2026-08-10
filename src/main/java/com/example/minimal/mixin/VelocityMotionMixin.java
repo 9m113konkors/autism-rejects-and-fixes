@@ -1,6 +1,6 @@
-package com.example.minimal.mixin;
+package com.konkors.autismpvp.mixin;
 
-import com.example.minimal.modules.VelocityModule;
+import com.konkors.autismpvp.modules.VelocityModule;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.multiplayer.ClientPacketListener;
 import net.minecraft.world.entity.Entity;

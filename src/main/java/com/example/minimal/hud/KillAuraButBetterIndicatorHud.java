@@ -1,7 +1,7 @@
-package com.example.minimal.hud;
+package com.konkors.autismpvp.hud;
 
-import com.example.minimal.MinimalAddon;
-import com.example.minimal.modules.KillAuraButBetterModule;
+import com.konkors.autismpvp.MinimalAddon;
+import com.konkors.autismpvp.modules.KillAuraButBetterModule;
 
 public final class KillAuraButBetterIndicatorHud extends FlashIndicatorHud {
     public static final String ID = MinimalAddon.ID + ":killaura-better-indicator";

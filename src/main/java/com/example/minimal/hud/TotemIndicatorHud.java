@@ -1,7 +1,7 @@
-package com.example.minimal.hud;
+package com.konkors.autismpvp.hud;
 
-import com.example.minimal.MinimalAddon;
-import com.example.minimal.modules.LegitAutoTotemModule;
+import com.konkors.autismpvp.MinimalAddon;
+import com.konkors.autismpvp.modules.LegitAutoTotemModule;
 
 public final class TotemIndicatorHud extends FlashIndicatorHud {
     public static final String ID = MinimalAddon.ID + ":totem-indicator";
