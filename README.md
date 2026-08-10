@@ -125,4 +125,4 @@ The addon uses the AUTISM Client API (`autismclient.api.*`) and follows the refm
 
 ## License
 
-This addon is provided under the CC0 license. Feel free to learn from it and incorporate it into your own projects.
+This addon is free software: you can redistribute it and/or modify it under the terms of the GNU General Public License as published by the Free Software Foundation, either version 3 of the License, or (at your option) any later version, matching the AUTISM Client it extends. See the `LICENSE` file for the full text.
