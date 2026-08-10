@@ -1,0 +1,34 @@
+{
+  "schemaVersion": 1,
+  "id": "autism-minimal-addon-template",
+  "version": "${version}",
+  "name": "AUTISM PvP Addon",
+  "description": "Sword PvP addon for AUTISM Client. Current module: Auto WTap.",
+  "authors": [
+    "You"
+  ],
+  "custom": {
+    "autism:color": "80,220,120",
+    "modmenu": {
+      "parent": {
+        "id": "autism"
+      }
+    }
+  },
+  "environment": "client",
+  "entrypoints": {
+    "client": [
+      "com.example.minimal.MinimalInit"
+    ],
+    "autism": [
+      "com.example.minimal.MinimalAddon"
+    ]
+  },
+  "depends": {
+    "java": ">=25",
+    "minecraft": "${mc_compat}",
+    "fabricloader": ">=0.19.3",
+    "fabric-api": ">=${fabric_api_version}",
+    "autism": "*"
+  }
+}
