@@ -1,10 +1,10 @@
 package com.konkors.autismpvp.hud;
 
-import com.konkors.autismpvp.MinimalAddon;
+import com.konkors.autismpvp.AutismPVP;
 import com.konkors.autismpvp.modules.KillAuraButBetterModule;
 
 public final class KillAuraButBetterIndicatorHud extends FlashIndicatorHud {
-    public static final String ID = MinimalAddon.ID + ":killaura-better-indicator";
+    public static final String ID = AutismPVP.ID + ":killaura-better-indicator";
 
     @Override public String id() { return ID; }
     @Override public String label() { return "KillAura But Better Indicator"; }

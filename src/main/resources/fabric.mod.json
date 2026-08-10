@@ -18,10 +18,10 @@
   "environment": "client",
   "entrypoints": {
     "client": [
-      "com.konkors.autismpvp.MinimalInit"
+      "com.konkors.autismpvp.AutismPVPInit"
     ],
     "autism": [
-      "com.konkors.autismpvp.MinimalAddon"
+      "com.konkors.autismpvp.AutismPVP"
     ]
   },
   "mixins": [

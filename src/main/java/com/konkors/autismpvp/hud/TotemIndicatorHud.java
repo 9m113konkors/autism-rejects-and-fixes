@@ -1,10 +1,10 @@
 package com.konkors.autismpvp.hud;
 
-import com.konkors.autismpvp.MinimalAddon;
+import com.konkors.autismpvp.AutismPVP;
 import com.konkors.autismpvp.modules.LegitAutoTotemModule;
 
 public final class TotemIndicatorHud extends FlashIndicatorHud {
-    public static final String ID = MinimalAddon.ID + ":totem-indicator";
+    public static final String ID = AutismPVP.ID + ":totem-indicator";
 
     @Override public String id() { return ID; }
     @Override public String label() { return "Totem Indicator"; }

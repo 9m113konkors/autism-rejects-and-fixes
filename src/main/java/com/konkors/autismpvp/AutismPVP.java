@@ -21,13 +21,13 @@ import com.konkors.autismpvp.modules.VelocityModule;
 
 import java.util.List;
 
-public final class MinimalAddon extends SimpleAddon {
+public final class AutismPVP extends SimpleAddon {
     public static final String ID = "autismpvp";
 
     // Matches ModuleCategory.toKey("ADDON " + addonId) in the host client.
     private static final String ADDON_CATEGORY = "ADDON_AUTISMPVP";
 
-    public MinimalAddon() {
+    public AutismPVP() {
         super(ApiVersion.CURRENT, "com.konkors.autismpvp");
     }
 

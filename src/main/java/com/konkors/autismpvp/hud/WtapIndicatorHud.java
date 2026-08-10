@@ -1,7 +1,7 @@
 package com.konkors.autismpvp.hud;
 
 import autismclient.api.hud.HudElementProvider;
-import com.konkors.autismpvp.MinimalAddon;
+import com.konkors.autismpvp.AutismPVP;
 import com.konkors.autismpvp.modules.AutoWTapModule;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Font;
@@ -9,7 +9,7 @@ import net.minecraft.client.gui.GuiGraphicsExtractor;
 
 // Small, non-intrusive indicator that lights up briefly whenever Auto WTap fires.
 public final class WtapIndicatorHud implements HudElementProvider {
-    public static final String ID = MinimalAddon.ID + ":wtap-indicator";
+    public static final String ID = AutismPVP.ID + ":wtap-indicator";
 
     private static final long FLASH_MS = 350L;
     private static final String TEXT = "WTAP";
