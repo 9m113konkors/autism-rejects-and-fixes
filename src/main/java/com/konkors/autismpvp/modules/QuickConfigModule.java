@@ -1,11 +1,11 @@
-package com.example.minimal.modules;
+package com.konkors.autismpvp.modules;
 
 import autismclient.api.module.ActionSetting;
 import autismclient.api.module.ChoiceSetting;
 import autismclient.api.module.IntSetting;
 import autismclient.modules.Module;
 import autismclient.modules.ModuleRegistry;
-import com.example.minimal.Tier;
+import com.konkors.autismpvp.Tier;
 
 import java.util.Locale;
 
@@ -15,7 +15,7 @@ import java.util.Locale;
 // top of the addon's category column so it is always the first thing you see.
 public final class QuickConfigModule extends Module {
 
-    public static final String ID = "autism-minimal-addon-template:quick-config";
+    public static final String ID = "autismpvp:quick-config";
 
     // Values indexed by tier bucket: 0 = Closet, 1 = Legit, 2 = Risky, 3 = Blatant, 4 = Impossible.
     private static final double[] REACH = {3.6, 4.0, 5.0, 7.0, 10.0};

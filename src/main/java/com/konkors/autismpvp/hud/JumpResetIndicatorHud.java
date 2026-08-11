@@ -1,10 +1,10 @@
-package com.example.minimal.hud;
+package com.konkors.autismpvp.hud;
 
-import com.example.minimal.MinimalAddon;
-import com.example.minimal.modules.AutoJumpResetModule;
+import com.konkors.autismpvp.AutismPVP;
+import com.konkors.autismpvp.modules.AutoJumpResetModule;
 
 public final class JumpResetIndicatorHud extends FlashIndicatorHud {
-    public static final String ID = MinimalAddon.ID + ":jump-reset-indicator";
+    public static final String ID = AutismPVP.ID + ":jump-reset-indicator";
 
     @Override public String id() { return ID; }
     @Override public String label() { return "JumpReset Indicator"; }

@@ -6,4 +6,4 @@ pluginManagement {
     }
 }
 
-rootProject.name = "autism-minimal-addon-template"
+rootProject.name = "autismpvp"

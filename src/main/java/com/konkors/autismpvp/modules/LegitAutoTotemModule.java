@@ -1,4 +1,4 @@
-package com.example.minimal.modules;
+package com.konkors.autismpvp.modules;
 
 import autismclient.api.module.BoolSetting;
 import autismclient.api.module.ChoiceSetting;
@@ -7,7 +7,7 @@ import autismclient.modules.Module;
 import autismclient.modules.ModuleRegistry;
 import autismclient.util.AutismInventoryClickHelper;
 import autismclient.util.AutismInventoryHelper;
-import com.example.minimal.Tier;
+import com.konkors.autismpvp.Tier;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.client.gui.screens.inventory.InventoryScreen;
 import net.minecraft.core.component.DataComponents;
@@ -29,7 +29,7 @@ import java.util.Random;
 // back to your previous slot afterwards so your other items stay usable.
 public final class LegitAutoTotemModule extends Module {
 
-    public static final String ID = "autism-minimal-addon-template:legit-auto-totem";
+    public static final String ID = "autismpvp:legit-auto-totem";
     public static volatile long lastSwapMs;
 
     private static final int OFFHAND_INDEX = 40;
