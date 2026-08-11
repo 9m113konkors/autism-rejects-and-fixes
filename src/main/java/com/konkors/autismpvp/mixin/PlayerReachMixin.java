@@ -1,6 +1,6 @@
-package com.example.minimal.mixin;
+package com.konkors.autismpvp.mixin;
 
-import com.example.minimal.modules.ReachModule;
+import com.konkors.autismpvp.modules.ReachModule;
 import net.minecraft.world.entity.player.Player;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;

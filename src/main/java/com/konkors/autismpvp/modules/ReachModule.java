@@ -1,13 +1,13 @@
-package com.example.minimal.modules;
+package com.konkors.autismpvp.modules;
 
 import autismclient.api.module.DoubleSetting;
 import autismclient.modules.Module;
 import autismclient.modules.ModuleRegistry;
-import com.example.minimal.Tier;
+import com.konkors.autismpvp.Tier;
 
 public final class ReachModule extends Module {
 
-    public static final String ID = "autism-minimal-addon-template:reach";
+    public static final String ID = "autismpvp:reach";
 
     // Up to 40 blocks so blatant modes are possible; servers still enforce their own limit.
     // Default is 3.05 (Vape v4 legit range): Grim simulates combat and flags attacks at ~3.06+

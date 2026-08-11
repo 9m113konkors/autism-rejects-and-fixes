@@ -1,4 +1,4 @@
-package com.example.minimal.modules;
+package com.konkors.autismpvp.modules;
 
 import autismclient.api.module.BoolSetting;
 import autismclient.api.module.DoubleSetting;
@@ -6,10 +6,14 @@ import autismclient.api.module.EnumSetting;
 import autismclient.api.module.IntSetting;
 import autismclient.modules.Module;
 import autismclient.modules.ModuleRegistry;
+<<<<<<< HEAD:src/main/java/com/example/minimal/modules/VelocityModule.java
 import autismclient.util.AutismKeyMappingBridge;
 import com.example.minimal.Tier;
 import net.minecraft.client.Minecraft;
 import net.minecraft.world.phys.Vec3;
+=======
+import com.konkors.autismpvp.Tier;
+>>>>>>> b46b0d5ba813af2c2b0d4860bde92eae69a4568e:src/main/java/com/konkors/autismpvp/modules/VelocityModule.java
 
 import java.util.Random;
 
@@ -28,7 +32,7 @@ import java.util.Random;
 //    movement sim, so Grim reads a legit jump instead of reduced velocity.
 public final class VelocityModule extends Module {
 
-    public static final String ID = "autism-minimal-addon-template:velocity";
+    public static final String ID = "autismpvp:velocity";
     public static volatile long lastKbMs;
 
     public enum Mode {

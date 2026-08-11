@@ -1,16 +1,16 @@
-package com.example.minimal.modules;
+package com.konkors.autismpvp.modules;
 
 import autismclient.api.module.BoolSetting;
 import autismclient.api.module.IntSetting;
 import autismclient.modules.Module;
 import autismclient.modules.ModuleRegistry;
-import com.example.minimal.Tier;
+import com.konkors.autismpvp.Tier;
 
 import java.util.Random;
 
 public final class AutoJumpResetModule extends Module {
 
-    public static final String ID = "autism-minimal-addon-template:auto-jump-reset";
+    public static final String ID = "autismpvp:auto-jump-reset";
     public static volatile long lastJumpMs;
 
     private enum Phase { IDLE, DELAY, HOLD }

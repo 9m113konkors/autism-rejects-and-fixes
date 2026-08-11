@@ -1,4 +1,4 @@
-package com.example.minimal;
+package com.konkors.autismpvp;
 
 // Risk tiers shown on each addon module: how obvious the current configuration looks to
 // other players (and to anyone watching your screen). The label is appended to the module's

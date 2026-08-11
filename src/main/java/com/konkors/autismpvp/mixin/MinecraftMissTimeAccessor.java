@@ -1,4 +1,4 @@
-package com.example.minimal.mixin;
+package com.konkors.autismpvp.mixin;
 
 import net.minecraft.client.Minecraft;
 import org.spongepowered.asm.mixin.Mixin;

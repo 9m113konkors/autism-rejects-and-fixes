@@ -1,12 +1,16 @@
-package com.example.minimal.modules;
+package com.konkors.autismpvp.modules;
 
 import autismclient.api.module.ActionSetting;
 import autismclient.api.module.ChoiceSetting;
 import autismclient.api.module.IntSetting;
 import autismclient.modules.Module;
 import autismclient.modules.ModuleRegistry;
+<<<<<<< HEAD:src/main/java/com/example/minimal/modules/QuickConfigModule.java
 import com.example.minimal.Tier;
 import com.example.minimal.api.RangeSetting;
+=======
+import com.konkors.autismpvp.Tier;
+>>>>>>> b46b0d5ba813af2c2b0d4860bde92eae69a4568e:src/main/java/com/konkors/autismpvp/modules/QuickConfigModule.java
 
 import java.util.Locale;
 
@@ -18,7 +22,7 @@ import java.util.Locale;
 // Module API, then re-pins this module to the top of the addon's category column.
 public final class QuickConfigModule extends Module {
 
-    public static final String ID = "autism-minimal-addon-template:quick-config";
+    public static final String ID = "autismpvp:quick-config";
 
     // Values indexed by tier bucket: 0 = Closet, 1 = Legit, 2 = Risky, 3 = Blatant, 4 = Impossible.
     // Velocity values are the % of knockback you KEEP (higher = more realistic). These mirror the

@@ -1,27 +1,29 @@
-package com.example.minimal.hud;
+package com.konkors.autismpvp.hud;
 
 import autismclient.api.hud.HudElementProvider;
-import com.example.minimal.MinimalAddon;
-import com.example.minimal.modules.AutoWTapModule;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Font;
 import net.minecraft.client.gui.GuiGraphicsExtractor;
 
-// Small, non-intrusive indicator that lights up briefly whenever Auto WTap fires.
-public final class WtapIndicatorHud implements HudElementProvider {
-    public static final String ID = MinimalAddon.ID + ":wtap-indicator";
+// Base for the small, non-intrusive per-module flash indicators. A subclass supplies the text,
+// whether its module is active, and a millisecond timestamp that is bumped whenever the module fires.
+public abstract class FlashIndicatorHud implements HudElementProvider {
+    protected static final long FLASH_MS = 350L;
 
-    private static final long FLASH_MS = 350L;
-    private static final String TEXT = "WTAP";
+    protected abstract String indicatorText();
+    protected abstract boolean indicatorActive();
+    protected abstract long lastFlashMs();
 
-    @Override public String id() { return ID; }
-    @Override public String label() { return "WTap Indicator"; }
-    @Override public String description() { return "Briefly lights up when Auto WTap fires."; }
+    // Idle text color: subclasses tint it by their module's risk tier.
+    protected int tierColor() {
+        return 0xFF3E4A40;
+    }
 
     @Override
     public int width() {
         Font font = Minecraft.getInstance().font;
-        int textWidth = font != null ? font.width(TEXT) : TEXT.length() * 6;
+        String text = indicatorText();
+        int textWidth = font != null ? font.width(text) : text.length() * 6;
         return textWidth + 6;
     }
 
@@ -29,25 +31,23 @@ public final class WtapIndicatorHud implements HudElementProvider {
 
     @Override
     public void render(GuiGraphicsExtractor ctx, Font font, int x, int y, float alpha) {
-        boolean active = AutoWTapModule.active();
+        boolean active = indicatorActive();
         if (!active) {
             return;
         }
-        long since = System.currentTimeMillis() - AutoWTapModule.lastTapMs;
+        long since = System.currentTimeMillis() - lastFlashMs();
         float progress = since >= FLASH_MS ? 0.0f : 1.0f - (float) since / FLASH_MS;
 
         int color;
-        if (active && progress > 0.0f) {
+        if (progress > 0.0f) {
             int r = 80 + (int) ((220 - 80) * progress);
             color = 0xFF000000 | (r << 16) | (0xDC << 8) | 0x78;
-        } else if (active) {
-            color = AutoWTapModule.tier().color();
         } else {
-            color = 0xFF3A3A3A;
+            color = tierColor();
         }
 
         int lineHeight = font != null ? font.lineHeight : 9;
-        ctx.text(font, TEXT, x + 2, y + (height() - lineHeight) / 2, color);
+        ctx.text(font, indicatorText(), x + 2, y + (height() - lineHeight) / 2, color);
 
         int barY = y + height() - 2;
         int barW = width() - 4;
@@ -60,5 +60,5 @@ public final class WtapIndicatorHud implements HudElementProvider {
     @Override public boolean defaultEnabled() { return true; }
     @Override public String defaultAnchor() { return "TOP_LEFT"; }
     @Override public int defaultX() { return 4; }
-    @Override public int defaultY() { return 130; }
+    @Override public int defaultY() { return 110; }
 }

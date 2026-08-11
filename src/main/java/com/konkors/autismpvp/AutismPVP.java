@@ -1,10 +1,11 @@
-package com.example.minimal;
+package com.konkors.autismpvp;
 
 import autismclient.api.ApiVersion;
 import autismclient.api.AutismAddons;
 import autismclient.api.SimpleAddon;
 import autismclient.util.AutismConfig;
 import autismclient.util.AutismHudManager;
+<<<<<<< HEAD:src/main/java/com/example/minimal/MinimalAddon.java
 import com.example.minimal.hud.AutoCritoutIndicatorHud;
 import com.example.minimal.hud.AutoStrafeIndicatorHud;
 import com.example.minimal.hud.AnchorMacroIndicatorHud;
@@ -41,17 +42,32 @@ import com.example.minimal.modules.ReachModule;
 import com.example.minimal.modules.SpearKillModule;
 import com.example.minimal.modules.VelocityModule;
 import com.example.minimal.modules.WorldChamsModule;
+=======
+import com.konkors.autismpvp.hud.JumpResetIndicatorHud;
+import com.konkors.autismpvp.hud.KillAuraButBetterIndicatorHud;
+import com.konkors.autismpvp.hud.ReachIndicatorHud;
+import com.konkors.autismpvp.hud.TotemIndicatorHud;
+import com.konkors.autismpvp.hud.VelocityIndicatorHud;
+import com.konkors.autismpvp.hud.WtapIndicatorHud;
+import com.konkors.autismpvp.modules.AutoJumpResetModule;
+import com.konkors.autismpvp.modules.AutoWTapModule;
+import com.konkors.autismpvp.modules.KillAuraButBetterModule;
+import com.konkors.autismpvp.modules.LegitAutoTotemModule;
+import com.konkors.autismpvp.modules.QuickConfigModule;
+import com.konkors.autismpvp.modules.ReachModule;
+import com.konkors.autismpvp.modules.VelocityModule;
+>>>>>>> b46b0d5ba813af2c2b0d4860bde92eae69a4568e:src/main/java/com/konkors/autismpvp/AutismPVP.java
 
 import java.util.List;
 
-public final class MinimalAddon extends SimpleAddon {
-    public static final String ID = "autism-minimal-addon-template";
+public final class AutismPVP extends SimpleAddon {
+    public static final String ID = "autismpvp";
 
     // Matches ModuleCategory.toKey("ADDON " + addonId) in the host client.
-    private static final String ADDON_CATEGORY = "ADDON_AUTISM-MINIMAL-ADDON-TEMPLATE";
+    private static final String ADDON_CATEGORY = "ADDON_AUTISMPVP";
 
-    public MinimalAddon() {
-        super(ApiVersion.CURRENT, "com.example.minimal");
+    public AutismPVP() {
+        super(ApiVersion.CURRENT, "com.konkors.autismpvp");
     }
 
     @Override
