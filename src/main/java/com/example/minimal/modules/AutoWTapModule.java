@@ -44,6 +44,9 @@ public final class AutoWTapModule extends Module {
         .group("Timing"));
     private final IntSetting chance = add(new IntSetting("chance", "Chance (%)", 100, 0, 100, 5)
         .group("Timing"));
+    private final IntSetting accuracy = add(new IntSetting("accuracy", "Accuracy (%)", 85, 0, 100, 5)
+        .group("Timing")
+        .description("How often the tap is perfectly on time. The remaining percentage taps a tick or two late, which reads as a human reaction instead of a scripted tap on every hit."));
     private final BoolSetting requireSprint = add(new BoolSetting("require-sprint", "Require sprinting", true)
         .group("Behavior"));
     private final BoolSetting requireCooldown = add(new BoolSetting("require-cooldown", "Require full cooldown (1.9+ servers)", false)
@@ -141,6 +144,9 @@ public final class AutoWTapModule extends Module {
         lastTapMs = System.currentTimeMillis();
         phase = Phase.DELAY;
         ticksLeft = Math.max(0, delayTicks.get());
+        if (accuracy.get() < 100 && random.nextInt(100) >= accuracy.get()) {
+            ticksLeft += 1 + random.nextInt(3);
+        }
     }
 
     private void advance() {

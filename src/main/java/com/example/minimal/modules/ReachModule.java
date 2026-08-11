@@ -10,12 +10,15 @@ public final class ReachModule extends Module {
     public static final String ID = "autism-minimal-addon-template:reach";
 
     // Up to 40 blocks so blatant modes are possible; servers still enforce their own limit.
-    private final DoubleSetting reach = add(new DoubleSetting("reach", "Reach", 4.0, 3.0, 40.0, 0.1)
+    // Default is 3.05 (Vape v4 legit range): Grim simulates combat and flags attacks at ~3.06+
+    // blocks, so anything above 3.1-3.2 is a ban risk on modern servers.
+    private final DoubleSetting reach = add(new DoubleSetting("reach", "Reach", 3.05, 3.0, 40.0, 0.1)
         .unit("blocks")
-        .group("General"));
+        .group("General")
+        .description("Attack/block reach in blocks. Grim flags attacks above ~3.05 blocks; keep 3.0-3.2 for legit play. Vape v4 legit configs use 3.1-3.4."));
 
     public ReachModule() {
-        super(ID, "Reach", "Extends your interaction range beyond vanilla. Works for attacks and block interaction; servers still enforce their own limit.");
+        super(ID, "Reach", "Extends your interaction range beyond vanilla. Works for attacks and block interaction; servers still enforce their own limit. Grim detects attacks above ~3.05 blocks, so keep it low.");
     }
 
     @Override

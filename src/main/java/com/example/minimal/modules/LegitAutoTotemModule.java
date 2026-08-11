@@ -5,15 +5,19 @@ import autismclient.api.module.ChoiceSetting;
 import autismclient.api.module.IntSetting;
 import autismclient.modules.Module;
 import autismclient.modules.ModuleRegistry;
+import autismclient.modules.KillAuraModule;
 import autismclient.util.AutismInventoryClickHelper;
 import autismclient.util.AutismInventoryHelper;
 import com.example.minimal.Tier;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.client.gui.screens.inventory.InventoryScreen;
 import net.minecraft.core.component.DataComponents;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.AbstractContainerMenu;
 import net.minecraft.world.inventory.ContainerInput;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.phys.Vec3;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -49,6 +53,14 @@ public final class LegitAutoTotemModule extends Module {
         .visibleWhen(() -> doubleHand.get()));
     private final IntSetting switchBackDelay = add(new IntSetting("switch-back-delay", "Switch back delay (ms)", 1500, 200, 5000, 100)
         .group("Behavior").visibleWhen(() -> doubleHand.get() && switchBack.get()));
+    private final BoolSetting dynamicDelay = add(new BoolSetting("dynamic-delay", "Dynamic delay", true)
+        .group("Timing")
+        .description("React faster the lower your health is (danger-based delay, like Prestige/Vape auto totem), and at full health keep the normal randomized delay. Reads as a human who speeds up when they are about to die."));
+    private final BoolSetting pauseInCombat = add(new BoolSetting("pause-in-combat", "Pause while enemy close", true)
+        .group("Behavior")
+        .description("Don't open the inventory to refill while an enemy is within the distance below. A real player does not stop to refill mid-fight, and opening the inventory in combat is the most likely thing to flag."));
+    private final IntSetting combatDistance = add(new IntSetting("combat-distance", "Enemy distance (blocks)", 6, 2, 16, 1)
+        .group("Behavior").visibleWhen(() -> pauseInCombat.get()));
     private final BoolSetting healthGate = add(new BoolSetting("health-gate", "Only when low health", true)
         .group("Behavior").visibleWhen(() -> !popMode()));
     private final IntSetting healthThreshold = add(new IntSetting("health-threshold", "Health threshold", 14, 0, 20, 1)
@@ -69,13 +81,14 @@ public final class LegitAutoTotemModule extends Module {
     private long closeAtMs;
     private long restoreAtMs;
     private long cooldownUntilMs;
+    private long stationaryWaitDeadline;
     private boolean openedByUs;
     private boolean offhandHadTotem;
     private int originalSelectedSlot;
     private int mainHandSlot = -1;
 
     public LegitAutoTotemModule() {
-        super(ID, "Legit AutoTotem", "Refills your offhand totem with real inventory clicks after it pops, and optionally double-hands into an empty or totem hotbar slot so your other items stay usable.");
+        super(ID, "Legit AutoTotem", "Refills your offhand totem with real inventory clicks after it pops, and optionally double-hands into an empty or totem hotbar slot so your other items stay usable. Only opens the inventory once you are grounded and stopped (Grim flags opening the inventory while moving).");
     }
 
     @Override
@@ -111,7 +124,7 @@ public final class LegitAutoTotemModule extends Module {
     }
 
     private boolean popMode() {
-        return "On totem pop".equals(choice("trigger"));
+        return "On totem pop".equals(trigger.get());
     }
 
     @Override
@@ -152,10 +165,72 @@ public final class LegitAutoTotemModule extends Module {
             return;
         }
 
+        // Grim InventoryD: you cannot move while an inventory is open, so opening it mid-sprint,
+        // mid-jump or right after knockback is flagged. Wait until we're grounded and stopped
+        // (with a hard deadline so the refill never stalls forever), then open.
+        if (!canOpenInventorySafely()) {
+            if (stationaryWaitDeadline == 0) {
+                stationaryWaitDeadline = now + 2000;
+            }
+            if (now >= stationaryWaitDeadline) {
+                stationaryWaitDeadline = 0;
+                cooldownUntilMs = now + 800L + random.nextInt(800);
+            }
+            return;
+        }
+        stationaryWaitDeadline = 0;
+
+        // Don't refill in the middle of a fight: opening the inventory while an enemy is in melee
+        // range is both what real players avoid and the easiest thing for an anticheat to flag.
+        if (pauseInCombat.get() && enemyWithin(combatDistance.get())) {
+            cooldownUntilMs = now + 400L + random.nextInt(600);
+            return;
+        }
+
         MC.gui.setScreen(new InventoryScreen(MC.player));
         openedByUs = true;
         phase = Phase.WAIT_OPEN;
         nextAtMs = now + delay();
+    }
+
+    // True when the host KillAura is on a target inside `dist` blocks, or (as a fallback when
+    // KillAura is off) when any other live player is inside that range.
+    private boolean enemyWithin(double dist) {
+        if (MC.level == null || MC.player == null) {
+            return false;
+        }
+        Module aura = ModuleRegistry.get("kill-aura");
+        if (aura instanceof KillAuraModule killAura && killAura.isEnabled()) {
+            LivingEntity target = killAura.currentTarget();
+            return target != null && target.isAlive()
+                && MC.player.distanceToSqr(target) <= dist * dist;
+        }
+        double distSqr = dist * dist;
+        for (Player other : MC.level.players()) {
+            if (other == MC.player || !other.isAlive() || other.isSpectator()) {
+                continue;
+            }
+            if (MC.player.distanceToSqr(other) <= distSqr) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    // A real player stops, lands and lets go of the attack/use key before opening the inventory to
+    // refill. Returns true only when opening the inventory cannot trip Grim's inventory checks.
+    private boolean canOpenInventorySafely() {
+        if (MC.player == null) {
+            return false;
+        }
+        if (!MC.player.onGround()) {
+            return false;
+        }
+        if (MC.player.isUsingItem() || MC.player.isHandsBusy() || MC.player.isBlocking()) {
+            return false;
+        }
+        Vec3 motion = MC.player.getDeltaMovement();
+        return motion == null || motion.horizontalDistanceSqr() < 0.0025;
     }
 
     private boolean buildPlan() {
@@ -347,7 +422,13 @@ public final class LegitAutoTotemModule extends Module {
     private long delay() {
         int lo = Math.min(minDelay.get(), maxDelay.get());
         int hi = Math.max(minDelay.get(), maxDelay.get());
-        return lo + (hi > lo ? random.nextInt(hi - lo + 1) : 0);
+        long base = lo + (hi > lo ? random.nextInt(hi - lo + 1) : 0);
+        if (dynamicDelay.get() && MC.player != null) {
+            // Danger score 0..1: at full health keep the normal delay, near death react fast.
+            double healthFraction = (MC.player.getHealth() + MC.player.getAbsorptionAmount()) / 20.0;
+            base = (long) (base * (0.4 + 0.6 * Math.max(0.0, Math.min(1.0, healthFraction))));
+        }
+        return Math.max(0, base);
     }
 
     private int findTotemSkipping(int... skipSlots) {
@@ -384,6 +465,7 @@ public final class LegitAutoTotemModule extends Module {
         nextAtMs = -1;
         closeAtMs = -1;
         restoreAtMs = -1;
+        stationaryWaitDeadline = 0;
         mainHandSlot = -1;
         originalSelectedSlot = MC.player != null ? MC.player.getInventory().getSelectedSlot() : -1;
     }

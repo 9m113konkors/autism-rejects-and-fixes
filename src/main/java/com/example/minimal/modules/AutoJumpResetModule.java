@@ -25,6 +25,9 @@ public final class AutoJumpResetModule extends Module {
         .group("Timing"));
     private final IntSetting maxHold = add(new IntSetting("max-hold", "Max hold (ticks)", 2, 1, 3, 1)
         .group("Timing"));
+    private final IntSetting accuracy = add(new IntSetting("accuracy", "Accuracy (%)", 85, 0, 100, 5)
+        .group("Timing")
+        .description("How often the reset is perfectly on time. The remaining percentage reacts a couple of ticks late, which reads as a slow human reaction instead of a perfect scripted jump every single hit."));
     private final BoolSetting requireGround = add(new BoolSetting("require-ground", "Require on ground", true)
         .group("Behavior"));
 
@@ -100,6 +103,10 @@ public final class AutoJumpResetModule extends Module {
         }
         int lo = Math.min(minDelay.get(), maxDelay.get());
         int hi = Math.max(minDelay.get(), maxDelay.get());
+        if (accuracy.get() < 100 && random.nextInt(100) >= accuracy.get()) {
+            lo += 2;
+            hi += 4;
+        }
         phase = Phase.DELAY;
         ticksLeft = lo + random.nextInt(hi - lo + 1);
     }
