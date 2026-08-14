@@ -1,4 +1,4 @@
-package com.example.minimal.modules;
+package com.konkors.autismpvp.modules;
 
 import autismclient.api.module.BoolSetting;
 import autismclient.api.module.IntSetting;
@@ -6,7 +6,7 @@ import autismclient.modules.Module;
 import autismclient.modules.ModuleRegistry;
 import autismclient.util.AutismInventoryHelper;
 import autismclient.util.AutismRotationUtil;
-import com.example.minimal.Tier;
+import com.konkors.autismpvp.Tier;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.tags.ItemTags;
@@ -24,7 +24,7 @@ import net.minecraft.world.phys.Vec3;
 // rockets you upward/away to escape pressure. Loops while held. Hostile, like the crystal macro.
 public final class CrystalWarpModule extends Module {
 
-    public static final String ID = "autism-minimal-addon-template:crystal-warp";
+    public static final String ID = "autismpvp:crystal-warp";
 
     private final IntSetting detonateDelay = add(new IntSetting("detonate-delay", "Detonate delay (ticks)", 1, 0, 10, 1)
         .group("Timing")

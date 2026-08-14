@@ -39,13 +39,17 @@ public final class LegitAutoTotemModule extends Module {
     private static final int OFFHAND_INDEX = 40;
 
     private final ChoiceSetting trigger = add(new ChoiceSetting("trigger", "Trigger", "On totem pop",
-        "On totem pop", "On low health").group("Behavior"));
+        "On totem pop", "On low health").group("Behavior")
+        .description("On totem pop re-arms after you actually pop a totem; On low health re-arms whenever you drop below the health slider."));
     private final IntSetting chance = add(new IntSetting("chance", "Chance (%)", 100, 0, 100, 5)
-        .group("Timing"));
+        .group("Timing")
+        .description("Chance per trigger that the swap fires. Lower = occasionally forgets to re-arm."));
     private final IntSetting minDelay = add(new IntSetting("min-delay", "Min delay (ms)", 60, 0, 500, 5)
-        .group("Timing"));
+        .group("Timing")
+        .description("Minimum human reaction delay before the swap starts."));
     private final IntSetting maxDelay = add(new IntSetting("max-delay", "Max delay (ms)", 200, 0, 500, 5)
-        .group("Timing"));
+        .group("Timing")
+        .description("Maximum human reaction delay. A random value between min and max is chosen each time."));
     private final BoolSetting doubleHand = add(new BoolSetting("double-hand", "Double hand", true)
         .group("Behavior").description("Hold a second totem in an empty or totem hotbar slot after a pop."));
     private final BoolSetting switchBack = add(new BoolSetting("switch-back", "Switch back", true)

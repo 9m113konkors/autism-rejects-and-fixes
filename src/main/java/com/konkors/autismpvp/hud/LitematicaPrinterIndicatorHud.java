@@ -1,10 +1,10 @@
-package com.example.minimal.hud;
+package com.konkors.autismpvp.hud;
 
-import com.example.minimal.MinimalAddon;
-import com.example.minimal.modules.LitematicaPrinterModule;
+import com.konkors.autismpvp.AutismPVP;
+import com.konkors.autismpvp.modules.LitematicaPrinterModule;
 
 public final class LitematicaPrinterIndicatorHud extends FlashIndicatorHud {
-    public static final String ID = MinimalAddon.ID + ":litematica-printer-indicator";
+    public static final String ID = AutismPVP.ID + ":litematica-printer-indicator";
 
     @Override public String id() { return ID; }
     @Override public String label() { return "Litematica Printer Indicator"; }

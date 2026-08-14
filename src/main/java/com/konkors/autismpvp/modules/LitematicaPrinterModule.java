@@ -1,4 +1,4 @@
-package com.example.minimal.modules;
+package com.konkors.autismpvp.modules;
 
 import autismclient.api.module.BoolSetting;
 import autismclient.api.module.DoubleSetting;
@@ -7,7 +7,7 @@ import autismclient.modules.Module;
 import autismclient.modules.ModuleRegistry;
 import autismclient.util.AutismInventoryHelper;
 import autismclient.util.AutismRotationUtil;
-import com.example.minimal.Tier;
+import com.konkors.autismpvp.Tier;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.world.InteractionHand;
@@ -32,7 +32,7 @@ import java.util.List;
 // installed alongside the client and a schematic world is loaded.
 public final class LitematicaPrinterModule extends Module {
 
-    public static final String ID = "autism-minimal-addon-template:litematica-printer";
+    public static final String ID = "autismpvp:litematica-printer";
 
     private static Method schematicWorldMethod;
     private static Method getBlockStateMethod;

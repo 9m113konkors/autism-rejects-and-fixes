@@ -1,11 +1,11 @@
-package com.example.minimal.modules;
+package com.konkors.autismpvp.modules;
 
 import autismclient.api.module.BoolSetting;
 import autismclient.api.module.ChoiceSetting;
 import autismclient.api.module.IntSetting;
 import autismclient.modules.Module;
 import autismclient.modules.ModuleRegistry;
-import com.example.minimal.Tier;
+import com.konkors.autismpvp.Tier;
 import net.minecraft.core.component.DataComponents;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.entity.player.Player;
@@ -19,7 +19,7 @@ import java.util.Random;
 // key-presses via AutismKeyMappingBridge so it reads as a genuine right-click.
 public final class GapMacroModule extends Module {
 
-    public static final String ID = "autism-minimal-addon-template:gap-macro";
+    public static final String ID = "autismpvp:gap-macro";
 
     private enum Phase { IDLE, EAT_WAIT, SWITCH_BACK }
 
@@ -38,7 +38,7 @@ public final class GapMacroModule extends Module {
         .group("Behavior")
         .description("Don't eat gaps while an enemy is within this distance.")
         .visibleWhen(() -> pauseInCombat.get()));
-    private final IntSetting eatTicks = add(new IntSetting("eat-ticks", "Eat duration (ticks)", 32, 10, 40, 1)
+    private final IntSetting eatTicks = add(new IntSetting("eat-ticks", "Eat duration (ticks)", 64, 40, 80, 1)
         .group("Timing")
         .description("Ticks to hold the right-click before releasing (golden apple takes 64 ticks = 3.2s)."));
 
@@ -112,7 +112,7 @@ public final class GapMacroModule extends Module {
             if (!MC.options.keyUse.isDown()) return;
         } else if (phase == Phase.IDLE && "Low health".equals(trigger.get())) {
             float health = MC.player.getHealth() + MC.player.getAbsorptionAmount();
-            if (health > healthThreshold.get() * 0.5f) return;
+            if (health > healthThreshold.get()) return;
             if (pauseInCombat.get() && enemyWithin(combatRange.get())) return;
             // Don't eat a gap if the offhand has a totem — let the totem handle the save.
             if (isTotem(MC.player.getOffhandItem())) return;

@@ -1,11 +1,11 @@
-package com.example.minimal.modules;
+package com.konkors.autismpvp.modules;
 
 import autismclient.api.module.BoolSetting;
 import autismclient.api.module.IntSetting;
 import autismclient.modules.AutismAntiBot;
 import autismclient.modules.Module;
 import autismclient.modules.ModuleRegistry;
-import com.example.minimal.Tier;
+import com.konkors.autismpvp.Tier;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.animal.Animal;
 import net.minecraft.world.entity.player.Player;
@@ -20,7 +20,7 @@ import java.util.Random;
 // ahead of the target by the estimated flight time. Auto-releases the arrow at full pull.
 public final class BowAimbotModule extends Module {
 
-    public static final String ID = "autism-minimal-addon-template:bow-aimbot";
+    public static final String ID = "autismpvp:bow-aimbot";
 
     private static final double ARROW_SPEED_MULT = 3.0;
     private static final double ARROW_GRAVITY = 0.05;
@@ -124,6 +124,7 @@ public final class BowAimbotModule extends Module {
         Vec3 eyePos = MC.player.getEyePosition();
         float power = BowItem.getPowerForTime(usingTicks);
         double arrowSpeed = power * ARROW_SPEED_MULT;
+        if (arrowSpeed <= 0.001) return;
 
         Vec3 targetPos = target.position().add(0, target.getBbHeight() * 0.5, 0);
         Vec3 targetVel = target.getDeltaMovement();
@@ -140,7 +141,7 @@ public final class BowAimbotModule extends Module {
 
             double flightTime = dist / arrowSpeed;
             double gravityDrop = 0.5 * ARROW_GRAVITY * flightTime * flightTime;
-            predicted = predicted.subtract(0, gravityDrop, 0);
+            predicted = predicted.add(0, gravityDrop, 0);
 
             Vec3 dir = predicted.subtract(eyePos);
             double horizontalDist = Math.sqrt(dir.x * dir.x + dir.z * dir.z);

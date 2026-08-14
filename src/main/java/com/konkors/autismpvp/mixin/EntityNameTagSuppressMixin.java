@@ -1,6 +1,6 @@
-package com.example.minimal.mixin;
+package com.konkors.autismpvp.mixin;
 
-import com.example.minimal.modules.BetterNameTagsModule;
+import com.konkors.autismpvp.modules.BetterNameTagsModule;
 import net.minecraft.client.renderer.entity.EntityRenderer;
 import net.minecraft.client.renderer.entity.state.EntityRenderState;
 import net.minecraft.world.entity.Entity;

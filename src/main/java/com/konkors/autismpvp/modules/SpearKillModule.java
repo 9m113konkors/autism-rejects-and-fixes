@@ -1,4 +1,4 @@
-package com.example.minimal.modules;
+package com.konkors.autismpvp.modules;
 
 import autismclient.api.module.BoolSetting;
 import autismclient.api.module.DoubleSetting;
@@ -6,7 +6,7 @@ import autismclient.api.module.EnumSetting;
 import autismclient.api.module.IntSetting;
 import autismclient.modules.Module;
 import autismclient.modules.ModuleRegistry;
-import com.example.minimal.Tier;
+import com.konkors.autismpvp.Tier;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.network.protocol.Packet;
@@ -44,7 +44,7 @@ import java.util.Map;
 // This module only works with the spear item - it never touches tridents.
 public final class SpearKillModule extends Module {
 
-    public static final String ID = "autism-minimal-addon-template:spear-kill";
+    public static final String ID = "autismpvp:spear-kill";
 
     public enum Mode {
         LUNGE,

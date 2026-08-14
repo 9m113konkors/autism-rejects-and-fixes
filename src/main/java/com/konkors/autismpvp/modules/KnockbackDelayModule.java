@@ -1,11 +1,11 @@
-package com.example.minimal.modules;
+package com.konkors.autismpvp.modules;
 
 import autismclient.api.module.BoolSetting;
 import autismclient.api.module.IntSetting;
 import autismclient.modules.KillAuraModule;
 import autismclient.modules.Module;
 import autismclient.modules.ModuleRegistry;
-import com.example.minimal.Tier;
+import com.konkors.autismpvp.Tier;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.phys.Vec3;
 
@@ -19,7 +19,7 @@ import java.util.Random;
 // skips liquids so it never looks suspicious there. Pairs with Velocity (delayed AND reduced).
 public final class KnockbackDelayModule extends Module {
 
-    public static final String ID = "autism-minimal-addon-template:knockback-delay";
+    public static final String ID = "autismpvp:knockback-delay";
     public static volatile long lastDelayMs;
 
     private static final Random ROLL = new Random();
@@ -77,6 +77,7 @@ public final class KnockbackDelayModule extends Module {
 
     @Override
     public void onDisable() {
+        releaseHeldMotion();
         reset();
     }
 
@@ -97,8 +98,10 @@ public final class KnockbackDelayModule extends Module {
 
         int delay = m.groundedTicks >= GROUNDED_FOR_TICKS ? m.groundDelay.get() : m.airDelay.get();
         if (delay <= 0) return false;
-        m.heldMotion = movement;
-        m.heldTicksLeft = delay;
+        // Motion packets can arrive back-to-back during a combo. Preserve every contribution
+        // instead of silently losing all but the latest packet.
+        m.heldMotion = m.heldMotion == null ? movement : m.heldMotion.add(movement);
+        m.heldTicksLeft = Math.max(m.heldTicksLeft, delay);
         lastDelayMs = System.currentTimeMillis();
         return true;
     }
@@ -120,7 +123,7 @@ public final class KnockbackDelayModule extends Module {
             if (m.heldMotion != null && --m.heldTicksLeft <= 0) {
                 Vec3 motion = m.heldMotion;
                 m.heldMotion = null;
-                MC.player.setDeltaMovement(VelocityModule.reduceMotion(motion));
+                MC.player.setDeltaMovement(MC.player.getDeltaMovement().add(VelocityModule.reduceMotion(motion)));
                 VelocityModule.notifyKnockback();
                 if (VelocityModule.jumpResets()) {
                     VelocityModule.scheduleJump();
@@ -157,5 +160,12 @@ public final class KnockbackDelayModule extends Module {
         heldMotion = null;
         heldTicksLeft = 0;
         groundedTicks = 0;
+    }
+
+    private void releaseHeldMotion() {
+        if (heldMotion == null || MC.player == null || MC.getConnection() == null) return;
+        MC.player.setDeltaMovement(MC.player.getDeltaMovement().add(heldMotion));
+        heldMotion = null;
+        heldTicksLeft = 0;
     }
 }

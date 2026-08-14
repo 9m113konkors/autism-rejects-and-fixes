@@ -1,10 +1,10 @@
-package com.example.minimal.hud;
+package com.konkors.autismpvp.hud;
 
-import com.example.minimal.MinimalAddon;
-import com.example.minimal.modules.CrystalMacroModule;
+import com.konkors.autismpvp.AutismPVP;
+import com.konkors.autismpvp.modules.CrystalMacroModule;
 
 public final class CrystalMacroIndicatorHud extends FlashIndicatorHud {
-    public static final String ID = MinimalAddon.ID + ":crystal-macro-indicator";
+    public static final String ID = AutismPVP.ID + ":crystal-macro-indicator";
 
     @Override public String id() { return ID; }
     @Override public String label() { return "Crystal Macro Indicator"; }

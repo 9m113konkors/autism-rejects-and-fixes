@@ -1,4 +1,4 @@
-package com.example.minimal.mixin;
+package com.konkors.autismpvp.mixin;
 
 import autismclient.api.module.Setting;
 import autismclient.api.module.SettingOwner;
@@ -16,7 +16,7 @@ import org.spongepowered.asm.mixin.injection.Redirect;
 @Mixin(VanillaModuleMenuController.class)
 public abstract class SettingDescriptionMixin {
 
-    private static final String ADDON_NS = "autism-minimal-addon-template:";
+    private static final String ADDON_NS = "autismpvp:";
 
     // renderSettingRow calls Setting.description() first to decide whether the inline description
     // fits (line: boolean descriptionShownInline = !option.description().isBlank() && ...). We

@@ -1,4 +1,4 @@
-package com.example.minimal.mixin;
+package com.konkors.autismpvp.mixin;
 
 import autismclient.api.module.Setting;
 import autismclient.api.module.SettingOwner;

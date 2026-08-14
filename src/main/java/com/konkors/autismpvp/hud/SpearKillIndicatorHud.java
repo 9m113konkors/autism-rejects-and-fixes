@@ -1,15 +1,15 @@
-package com.example.minimal.hud;
+package com.konkors.autismpvp.hud;
 
 import autismclient.api.hud.HudElementProvider;
-import com.example.minimal.MinimalAddon;
-import com.example.minimal.modules.SpearKillModule;
+import com.konkors.autismpvp.AutismPVP;
+import com.konkors.autismpvp.modules.SpearKillModule;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Font;
 import net.minecraft.client.gui.GuiGraphicsExtractor;
 
 // Static value indicator: shows the spear range and lights up while the module is on.
 public final class SpearKillIndicatorHud implements HudElementProvider {
-    public static final String ID = MinimalAddon.ID + ":spear-kill-indicator";
+    public static final String ID = AutismPVP.ID + ":spear-kill-indicator";
 
     private String text() {
         return "SPEAR " + SpearKillModule.modeLabel() + " " + SpearKillModule.range() + "b";

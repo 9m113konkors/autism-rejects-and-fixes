@@ -30,7 +30,10 @@ public abstract class VelocityMixin {
         autismMinimal$kbScaled = false;
         LivingEntity self = (LivingEntity) (Object) this;
         if (self != Minecraft.getInstance().player) return;
-        if (!VelocityModule.active() || !VelocityModule.rollPasses()) return;
+        // Packet motion is authoritative on the client. Only retain this fallback for the
+        // immediate reduce path, where it cannot conflict with delayed or smooth processing.
+        if (!VelocityModule.active() || VelocityModule.currentMode() != VelocityModule.Mode.REDUCE
+            || VelocityModule.delayTicks() > 0 || !VelocityModule.rollPasses()) return;
         autismMinimal$kbScaled = true;
         VelocityModule.notifyKnockback();
     }

@@ -1,7 +1,7 @@
-package com.example.minimal.mixin;
+package com.konkors.autismpvp.mixin;
 
-import com.example.minimal.modules.KnockbackDelayModule;
-import com.example.minimal.modules.VelocityModule;
+import com.konkors.autismpvp.modules.KnockbackDelayModule;
+import com.konkors.autismpvp.modules.VelocityModule;
 import net.minecraft.client.multiplayer.ClientPacketListener;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;

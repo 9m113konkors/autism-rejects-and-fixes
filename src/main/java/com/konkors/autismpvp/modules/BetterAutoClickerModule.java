@@ -1,4 +1,4 @@
-package com.example.minimal.modules;
+package com.konkors.autismpvp.modules;
 
 import autismclient.api.module.BoolSetting;
 import autismclient.api.module.IntSetting;
@@ -6,9 +6,9 @@ import autismclient.mixin.accessor.AutismMultiPlayerGameModeAccessor;
 import autismclient.modules.KillAuraModule;
 import autismclient.modules.Module;
 import autismclient.modules.ModuleRegistry;
-import com.example.minimal.Tier;
-import com.example.minimal.api.RangeSetting;
-import com.example.minimal.mixin.MinecraftMissTimeAccessor;
+import com.konkors.autismpvp.Tier;
+import com.konkors.autismpvp.api.RangeSetting;
+import com.konkors.autismpvp.mixin.MinecraftMissTimeAccessor;
 import net.minecraft.network.protocol.game.ServerboundAttackPacket;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.entity.LivingEntity;
@@ -23,7 +23,7 @@ import java.util.Random;
 // handled by the separate Auto Critout module.
 public final class BetterAutoClickerModule extends Module {
 
-    public static final String ID = "autism-minimal-addon-template:better-auto-clicker";
+    public static final String ID = "autismpvp:better-auto-clicker";
     public static volatile long lastClickMs;
 
     private final BoolSetting withKillAura = add(new BoolSetting("with-killaura", "Attack with KillAura", true)
@@ -223,6 +223,8 @@ public final class BetterAutoClickerModule extends Module {
         }
 
         ((AutismMultiPlayerGameModeAccessor) MC.gameMode).autism$ensureHasSentCarriedItem();
+        // AutoShield: drop the block exactly when the swing goes out so the hit actually lands.
+        AutoShieldModule.willAttack();
         MC.getConnection().send(new ServerboundAttackPacket(target.getId()));
         MC.player.swing(InteractionHand.MAIN_HAND);
         if (attackCooldown.get()) {

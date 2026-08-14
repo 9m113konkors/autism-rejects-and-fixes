@@ -1,11 +1,7 @@
 package com.konkors.autismpvp.mixin;
 
-<<<<<<< HEAD:src/main/java/com/example/minimal/mixin/VelocityMotionMixin.java
-import com.example.minimal.modules.KnockbackDelayModule;
-import com.example.minimal.modules.VelocityModule;
-=======
+import com.konkors.autismpvp.modules.KnockbackDelayModule;
 import com.konkors.autismpvp.modules.VelocityModule;
->>>>>>> b46b0d5ba813af2c2b0d4860bde92eae69a4568e:src/main/java/com/konkors/autismpvp/mixin/VelocityMotionMixin.java
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.multiplayer.ClientPacketListener;
 import net.minecraft.world.entity.Entity;
@@ -53,7 +49,7 @@ public abstract class VelocityMotionMixin {
                     if (h != 100 || v != 100) {
                         Vec3 scaled = new Vec3(movement.x * h / 100.0, movement.y * v / 100.0, movement.z * h / 100.0);
                         if (VelocityModule.delayTicks() > 0) {
-                            VelocityModule.schedule(scaled);
+                            VelocityModule.schedule(movement, scaled);
                         } else {
                             movement = scaled;
                         }

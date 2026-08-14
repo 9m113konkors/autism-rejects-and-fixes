@@ -1,4 +1,4 @@
-package com.example.minimal.modules;
+package com.konkors.autismpvp.modules;
 
 import autismclient.api.module.BoolSetting;
 import autismclient.api.module.ColorSetting;
@@ -11,7 +11,7 @@ import autismclient.modules.ModuleRegistry;
 import autismclient.modules.PackHideState;
 import autismclient.modules.TeamsModule;
 import autismclient.util.AutismUiScale;
-import com.example.minimal.Tier;
+import com.konkors.autismpvp.Tier;
 import net.minecraft.client.Camera;
 import net.minecraft.client.gui.GuiGraphicsExtractor;
 import net.minecraft.client.multiplayer.PlayerInfo;
@@ -43,7 +43,7 @@ import java.util.List;
 //   - EntityNameTagSuppressMixin clears vanilla nameTag so the stock black tag never double-draws.
 public final class BetterNameTagsModule extends Module {
 
-    public static final String ID = "autism-minimal-addon-template:better-nametags";
+    public static final String ID = "autismpvp:better-nametags";
 
     private final BoolSetting players = add(new BoolSetting("players", "Players", true)
         .group("General")
@@ -367,8 +367,7 @@ public final class BetterNameTagsModule extends Module {
         int tx = ox - width / 2;
         for (Seg s : segments) {
             if (s.item != null) {
-                // Render item icon
-                renderItem(ctx, s.item, tx, top + 1);
+                renderItem(ctx, s.item, tx, top + 1, s.durabilityOverlay);
                 tx += 16;
             } else {
                 ctx.text(MC.font, s.text(), tx, top + 1, s.color(), true);
@@ -378,22 +377,9 @@ public final class BetterNameTagsModule extends Module {
         ctx.pose().popMatrix();
     }
     
-    private static void renderItem(GuiGraphicsExtractor ctx, ItemStack stack, int x, int y) {
-        // Render the item info as text since GuiGraphicsExtractor renderItem isn't available
-        String name = getItemName(stack);
-        ctx.text(MC.font, Component.literal(name).getVisualOrderText(), x, y, 0xFFFFFFFF, false);
-    }
-
-    private static String getItemName(ItemStack stack) {
-        String name = stack.getHoverName().getString();
-        if (name.length() > 8) name = name.substring(0, 8);
-        int maxDmg = stack.getMaxDamage();
-        if (maxDmg > 0) {
-            int pct = (int) Math.round((1.0 - (double) stack.getDamageValue() / maxDmg) * 100);
-            name = name + " " + pct + "%";
-        }
-        if (stack.getCount() > 1) name = name + " x" + stack.getCount();
-        return name;
+    private static void renderItem(GuiGraphicsExtractor ctx, ItemStack stack, int x, int y, String overlay) {
+        ctx.item(stack, x, y);
+        ctx.itemDecorations(MC.font, stack, x, y, overlay);
     }
 
     private static float[] projectHead(Entity entity, float tickDelta, Projection p) {

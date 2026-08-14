@@ -1,4 +1,4 @@
-package com.example.minimal.modules;
+package com.konkors.autismpvp.modules;
 
 import autismclient.api.module.BoolSetting;
 import autismclient.api.module.IntSetting;
@@ -6,7 +6,7 @@ import autismclient.modules.Module;
 import autismclient.modules.ModuleRegistry;
 import autismclient.util.AutismInventoryHelper;
 import autismclient.util.AutismRotationUtil;
-import com.example.minimal.Tier;
+import com.konkors.autismpvp.Tier;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.world.InteractionHand;
@@ -25,7 +25,7 @@ import net.minecraft.world.phys.Vec3;
 // deliberately not "legit-looking" — it is machine-speed hostile block work.
 public final class AnchorMacroModule extends Module {
 
-    public static final String ID = "autism-minimal-addon-template:anchor-macro";
+    public static final String ID = "autismpvp:anchor-macro";
 
     private enum Phase {
         PLACE,
@@ -37,7 +37,7 @@ public final class AnchorMacroModule extends Module {
 
     private final IntSetting detonateDelay = add(new IntSetting("detonate-delay", "Detonate delay (ticks)", 4, 0, 20, 1)
         .group("Timing")
-        .description("Ticks between placing/charging the anchor and breaking it, so the server registers the state change first."));
+        .description("Ticks between placing/charging the anchor and detonating it, so the server registers the state change first."));
     private final IntSetting cycleDelay = add(new IntSetting("cycle-delay", "Cycle delay (ticks)", 4, 0, 40, 1)
         .group("Timing")
         .description("Ticks between detonations. Lower = faster spam."));
@@ -123,7 +123,7 @@ public final class AnchorMacroModule extends Module {
         switch (phase) {
             case PLACE -> {
                 if (anchored) {
-                    phase = charge >= 1 ? Phase.DETONATE : Phase.CHARGE;
+                    phase = charge >= RespawnAnchorBlock.MAX_CHARGES ? Phase.DETONATE : Phase.CHARGE;
                     break;
                 }
                 if (!state.isAir() || MC.player.distanceToSqr(Vec3.atCenterOf(pos)) > range.get() * (double) range.get()) {
@@ -132,17 +132,16 @@ public final class AnchorMacroModule extends Module {
                 if (autoSelect.get() && !selectItem(Items.RESPAWN_ANCHOR)) {
                     break;
                 }
+                HitResult hit = MC.hitResult;
+                if (!(hit instanceof BlockHitResult blockHit)) break;
                 aimAt(Vec3.atCenterOf(pos));
-                BlockHitResult blockHit = (BlockHitResult) MC.hitResult;
-                if (blockHit == null) {
-                    break;
+                if (place(blockHit)) {
+                    phase = Phase.WAIT;
+                    phaseTicks = Math.max(0, detonateDelay.get());
                 }
-                place(pos, blockHit);
-                phase = Phase.WAIT;
-                phaseTicks = Math.max(0, detonateDelay.get());
             }
             case CHARGE -> {
-                if (!anchored || charge >= 1) {
+                if (!anchored || charge >= RespawnAnchorBlock.MAX_CHARGES) {
                     phase = Phase.PLACE;
                     break;
                 }
@@ -154,29 +153,32 @@ public final class AnchorMacroModule extends Module {
                     break;
                 }
                 aimAt(Vec3.atCenterOf(pos));
-                useOn(pos, new BlockHitResult(Vec3.atCenterOf(pos), Direction.UP, pos, false));
-                phase = Phase.WAIT;
-                phaseTicks = Math.max(0, detonateDelay.get());
+                if (useOn(new BlockHitResult(Vec3.atCenterOf(pos), Direction.UP, pos, false))) {
+                    phase = Phase.WAIT;
+                    phaseTicks = Math.max(0, detonateDelay.get());
+                }
             }
             case WAIT -> {
                 if (--phaseTicks <= 0) {
                     BlockState fresh = MC.level.getBlockState(pos);
                     boolean isAnchor = fresh.getBlock() instanceof RespawnAnchorBlock;
-                    phase = isAnchor && fresh.getValue(RespawnAnchorBlock.CHARGE) >= 1 ? Phase.DETONATE : Phase.PLACE;
+                    phase = isAnchor && fresh.getValue(RespawnAnchorBlock.CHARGE) >= RespawnAnchorBlock.MAX_CHARGES
+                        ? Phase.DETONATE : Phase.PLACE;
                 }
             }
             case DETONATE -> {
-                if (!anchored || charge < 1) {
+                if (!anchored || charge < RespawnAnchorBlock.MAX_CHARGES) {
                     phase = Phase.PLACE;
                     break;
                 }
                 aimAt(Vec3.atCenterOf(pos));
-                MC.gameMode.destroyBlock(pos);
-                if (autoSword.get()) {
-                    selectSword();
+                if (useOn(new BlockHitResult(Vec3.atCenterOf(pos), Direction.UP, pos, false))) {
+                    if (autoSword.get()) {
+                        selectSword();
+                    }
+                    phase = Phase.WAIT_CYCLE;
+                    phaseTicks = Math.max(0, cycleDelay.get());
                 }
-                phase = Phase.WAIT_CYCLE;
-                phaseTicks = Math.max(0, cycleDelay.get());
             }
             case WAIT_CYCLE -> {
                 if (--phaseTicks <= 0) {
@@ -199,18 +201,20 @@ public final class AnchorMacroModule extends Module {
         return hitBlock.relative(blockHit.getDirection()).immutable();
     }
 
-    private void place(BlockPos pos, BlockHitResult blockHit) {
+    private boolean place(BlockHitResult blockHit) {
         InteractionResult result = MC.gameMode.useItemOn(MC.player, InteractionHand.MAIN_HAND, blockHit);
         if (result.consumesAction()) {
             MC.player.swing(InteractionHand.MAIN_HAND);
         }
+        return result.consumesAction();
     }
 
-    private void useOn(BlockPos pos, BlockHitResult anchorHit) {
+    private boolean useOn(BlockHitResult anchorHit) {
         InteractionResult result = MC.gameMode.useItemOn(MC.player, InteractionHand.MAIN_HAND, anchorHit);
         if (result.consumesAction()) {
             MC.player.swing(InteractionHand.MAIN_HAND);
         }
+        return result.consumesAction();
     }
 
     private void aimAt(Vec3 point) {

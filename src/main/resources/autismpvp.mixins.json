@@ -13,7 +13,8 @@
     "EntityNameTagSuppressMixin",
     "RangeSliderMixin",
     "SettingOwnerAccessor",
-    "SettingDescriptionMixin"
+    "SettingDescriptionMixin",
+    "UiContextsTextRendererMixin"
   ],
   "injectors": {
     "defaultRequire": 1

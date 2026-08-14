@@ -1,10 +1,10 @@
-package com.example.minimal.hud;
+package com.konkors.autismpvp.hud;
 
-import com.example.minimal.MinimalAddon;
-import com.example.minimal.modules.AutoStrafeModule;
+import com.konkors.autismpvp.AutismPVP;
+import com.konkors.autismpvp.modules.AutoStrafeModule;
 
 public final class AutoStrafeIndicatorHud extends FlashIndicatorHud {
-    public static final String ID = MinimalAddon.ID + ":auto-strafe-indicator";
+    public static final String ID = AutismPVP.ID + ":auto-strafe-indicator";
 
     @Override public String id() { return ID; }
     @Override public String label() { return "Auto Strafe Indicator"; }

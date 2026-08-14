@@ -6,14 +6,10 @@ import autismclient.api.module.EnumSetting;
 import autismclient.api.module.IntSetting;
 import autismclient.modules.Module;
 import autismclient.modules.ModuleRegistry;
-<<<<<<< HEAD:src/main/java/com/example/minimal/modules/VelocityModule.java
 import autismclient.util.AutismKeyMappingBridge;
-import com.example.minimal.Tier;
+import com.konkors.autismpvp.Tier;
 import net.minecraft.client.Minecraft;
 import net.minecraft.world.phys.Vec3;
-=======
-import com.konkors.autismpvp.Tier;
->>>>>>> b46b0d5ba813af2c2b0d4860bde92eae69a4568e:src/main/java/com/konkors/autismpvp/modules/VelocityModule.java
 
 import java.util.Random;
 
@@ -57,6 +53,7 @@ public final class VelocityModule extends Module {
     private static final Random JITTER = new Random();
     private static final Random SMOOTH_RND = new Random();
     private static Vec3 pendingScaled;
+    private static Vec3 pendingOriginal;
     private static int pendingTicksLeft;
     private static double pendingJitter = 1.0;
     private static int pendingJumpTicks;
@@ -65,6 +62,7 @@ public final class VelocityModule extends Module {
     // Smooth decay state: ticks remaining, original motion, current fraction applied
     private static int smoothTicksLeft;
     private static Vec3 smoothOriginal;
+    private static Vec3 smoothApplied = Vec3.ZERO;
 
     private final EnumSetting<Mode> mode = add(new EnumSetting<>("mode", "Mode", Mode.REDUCE, Mode.values())
         .group("General")
@@ -200,7 +198,8 @@ public final class VelocityModule extends Module {
 
     // Called from VelocityMotionMixin when the reduction must wait: the full server knockback is
     // applied immediately, and the reduced (scaled) motion is applied once the delay elapses.
-    public static void schedule(Vec3 scaled) {
+    public static void schedule(Vec3 original, Vec3 scaled) {
+        pendingOriginal = original;
         pendingScaled = scaled;
         pendingTicksLeft = Math.max(0, delayTicks());
         pendingJitter = 1.0 + JITTER.nextDouble() * (jitterPct() / 100.0);
@@ -224,6 +223,7 @@ public final class VelocityModule extends Module {
 
     private static void startSmoothDecay(Vec3 original) {
         smoothOriginal = original;
+        smoothApplied = original;
         smoothTicksLeft = smoothDuration();
     }
 
@@ -257,13 +257,15 @@ public final class VelocityModule extends Module {
             pendingTicksLeft--;
             if (pendingTicksLeft <= 0) {
                 Vec3 held = pendingScaled;
+                Vec3 original = pendingOriginal;
                 pendingScaled = null;
+                pendingOriginal = null;
                 if (pendingJitter < 0) {
                     // Sentinel: was a smooth-mode hold — start the decay from full motion now
                     startSmoothDecay(held);
                 } else if (client.player != null) {
-                    client.player.setDeltaMovement(
-                        held.x * pendingJitter, held.y * pendingJitter, held.z * pendingJitter);
+                    Vec3 target = held.scale(pendingJitter);
+                    client.player.setDeltaMovement(client.player.getDeltaMovement().add(target.subtract(original)));
                 }
                 return;
             }
@@ -297,10 +299,12 @@ public final class VelocityModule extends Module {
             // which matches how Vulcan models natural knockback decay (friction-based).
             double hExp = Math.pow(hTarget, progress);
             double vExp = Math.pow(vTarget, progress);
-            client.player.setDeltaMovement(
+            Vec3 target = new Vec3(
                 smoothOriginal.x * hExp,
                 smoothOriginal.y * vExp,
                 smoothOriginal.z * hExp);
+            client.player.setDeltaMovement(client.player.getDeltaMovement().add(target.subtract(smoothApplied)));
+            smoothApplied = target;
         }
     }
 

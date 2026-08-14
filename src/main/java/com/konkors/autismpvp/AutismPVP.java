@@ -5,58 +5,52 @@ import autismclient.api.AutismAddons;
 import autismclient.api.SimpleAddon;
 import autismclient.util.AutismConfig;
 import autismclient.util.AutismHudManager;
-<<<<<<< HEAD:src/main/java/com/example/minimal/MinimalAddon.java
-import com.example.minimal.hud.AutoCritoutIndicatorHud;
-import com.example.minimal.hud.AutoStrafeIndicatorHud;
-import com.example.minimal.hud.AnchorMacroIndicatorHud;
-import com.example.minimal.hud.BacktrackIndicatorHud;
-import com.example.minimal.hud.CrystalAuraIndicatorHud;
-import com.example.minimal.hud.CrystalMacroIndicatorHud;
-import com.example.minimal.hud.CrystalWarpIndicatorHud;
-import com.example.minimal.hud.JumpResetIndicatorHud;
-import com.example.minimal.hud.KnockbackDelayIndicatorHud;
-import com.example.minimal.hud.LitematicaPrinterIndicatorHud;
-import com.example.minimal.hud.ReachIndicatorHud;
-import com.example.minimal.hud.SpearKillIndicatorHud;
-import com.example.minimal.hud.TotemIndicatorHud;
-import com.example.minimal.hud.VelocityIndicatorHud;
-import com.example.minimal.hud.WtapIndicatorHud;
-import com.example.minimal.modules.AutoCritoutModule;
-import com.example.minimal.modules.AutoJumpResetModule;
-import com.example.minimal.modules.AutoStrafeModule;
-import com.example.minimal.modules.AutoWTapModule;
-import com.example.minimal.modules.AnchorMacroModule;
-import com.example.minimal.modules.BacktrackModule;
-import com.example.minimal.modules.BetterAutoClickerModule;
-import com.example.minimal.modules.BetterNameTagsModule;
-import com.example.minimal.modules.BowAimbotModule;
-import com.example.minimal.modules.CrystalMacroModule;
-import com.example.minimal.modules.CrystalAuraModule;
-import com.example.minimal.modules.CrystalWarpModule;
-import com.example.minimal.modules.GapMacroModule;
-import com.example.minimal.modules.KnockbackDelayModule;
-import com.example.minimal.modules.LegitAutoTotemModule;
-import com.example.minimal.modules.LitematicaPrinterModule;
-import com.example.minimal.modules.QuickConfigModule;
-import com.example.minimal.modules.ReachModule;
-import com.example.minimal.modules.SpearKillModule;
-import com.example.minimal.modules.VelocityModule;
-import com.example.minimal.modules.WorldChamsModule;
-=======
+import com.konkors.autismpvp.hud.AnchorMacroIndicatorHud;
+import com.konkors.autismpvp.hud.AutoStrafeIndicatorHud;
+import com.konkors.autismpvp.hud.BacktrackIndicatorHud;
+import com.konkors.autismpvp.hud.CrystalAuraIndicatorHud;
+import com.konkors.autismpvp.hud.CrystalMacroIndicatorHud;
+import com.konkors.autismpvp.hud.CrystalWarpIndicatorHud;
 import com.konkors.autismpvp.hud.JumpResetIndicatorHud;
-import com.konkors.autismpvp.hud.KillAuraButBetterIndicatorHud;
+import com.konkors.autismpvp.hud.AutoCritoutIndicatorHud;
+import com.konkors.autismpvp.hud.KnockbackDelayIndicatorHud;
+import com.konkors.autismpvp.hud.LitematicaPrinterIndicatorHud;
 import com.konkors.autismpvp.hud.ReachIndicatorHud;
+import com.konkors.autismpvp.hud.SpearKillIndicatorHud;
 import com.konkors.autismpvp.hud.TotemIndicatorHud;
 import com.konkors.autismpvp.hud.VelocityIndicatorHud;
 import com.konkors.autismpvp.hud.WtapIndicatorHud;
+import com.konkors.autismpvp.modules.AutoCritoutModule;
 import com.konkors.autismpvp.modules.AutoJumpResetModule;
+import com.konkors.autismpvp.modules.AutoShieldModule;
+import com.konkors.autismpvp.modules.AutoStrafeModule;
 import com.konkors.autismpvp.modules.AutoWTapModule;
-import com.konkors.autismpvp.modules.KillAuraButBetterModule;
+import com.konkors.autismpvp.modules.AnchorMacroModule;
+import com.konkors.autismpvp.modules.BacktrackModule;
+import com.konkors.autismpvp.modules.BetterAutoClickerModule;
+import com.konkors.autismpvp.modules.BetterClickGuiModule;
+import com.konkors.autismpvp.modules.BetterNameTagsModule;
+import com.konkors.autismpvp.modules.BowAimbotModule;
+import com.konkors.autismpvp.modules.CrystalMacroModule;
+import com.konkors.autismpvp.modules.CrystalAuraModule;
+import com.konkors.autismpvp.modules.CrystalWarpModule;
+import com.konkors.autismpvp.modules.GapMacroModule;
+import com.konkors.autismpvp.modules.KnockbackDelayModule;
 import com.konkors.autismpvp.modules.LegitAutoTotemModule;
-import com.konkors.autismpvp.modules.QuickConfigModule;
+import com.konkors.autismpvp.modules.LitematicaPrinterModule;
 import com.konkors.autismpvp.modules.ReachModule;
+import com.konkors.autismpvp.modules.SpearKillModule;
 import com.konkors.autismpvp.modules.VelocityModule;
->>>>>>> b46b0d5ba813af2c2b0d4860bde92eae69a4568e:src/main/java/com/konkors/autismpvp/AutismPVP.java
+import com.konkors.autismpvp.modules.WorldChamsModule;
+import com.konkors.autismpvp.modules.presets.Axe_PresetModule;
+import com.konkors.autismpvp.modules.presets.BedwarsPresetModule;
+import com.konkors.autismpvp.modules.presets.Mace_PresetModule;
+import com.konkors.autismpvp.modules.presets.NethOP_PresetModule;
+import com.konkors.autismpvp.modules.presets.Pot_PresetModule;
+import com.konkors.autismpvp.modules.presets.SMP_PresetModule;
+import com.konkors.autismpvp.modules.presets.Sword_PresetModule;
+import com.konkors.autismpvp.modules.presets.UHC_PresetModule;
+import com.konkors.autismpvp.modules.presets.Vanilla_PresetModule;
 
 import java.util.List;
 
@@ -87,11 +81,21 @@ public final class AutismPVP extends SimpleAddon {
         registerModule(new LegitAutoTotemModule());
         registerModule(new AutoCritoutModule());
         registerModule(new BetterAutoClickerModule());
+        registerModule(new AutoShieldModule());
         registerModule(new VelocityModule());
         registerModule(new BowAimbotModule());
         registerModule(new WorldChamsModule());
         registerModule(new GapMacroModule());
-        registerModule(new QuickConfigModule());
+        registerModule(new BedwarsPresetModule());
+        registerModule(new Vanilla_PresetModule());
+        registerModule(new UHC_PresetModule());
+        registerModule(new Pot_PresetModule());
+        registerModule(new NethOP_PresetModule());
+        registerModule(new SMP_PresetModule());
+        registerModule(new Sword_PresetModule());
+        registerModule(new Axe_PresetModule());
+        registerModule(new Mace_PresetModule());
+        registerModule(new BetterClickGuiModule());
         registerModule(new BetterNameTagsModule());
         AutismAddons.hud().register(new WtapIndicatorHud());
         AutismAddons.hud().register(new JumpResetIndicatorHud());
@@ -110,7 +114,6 @@ public final class AutismPVP extends SimpleAddon {
         AutismAddons.hud().register(new VelocityIndicatorHud());
 
         positionCategoryWindow();
-        pinQuickConfigToTop();
         AutismAddons.events().onTick(mc -> syncHudVisibility());
     }
 
@@ -157,18 +160,4 @@ public final class AutismPVP extends SimpleAddon {
         }
     }
 
-    // The module menu sorts each category column by the persisted per-category id list
-    // (moduleCategoryOrder), appending unknown modules at the end. Force QuickConfig to index 0 so
-    // it always renders at the top of the addon's column, every launch, without touching the client.
-    private static void pinQuickConfigToTop() {
-        try {
-            AutismConfig config = AutismConfig.getGlobal();
-            List<String> order = config.moduleCategoryOrder
-                .computeIfAbsent(ADDON_CATEGORY, key -> new java.util.ArrayList<>());
-            order.remove(QuickConfigModule.ID);
-            order.add(0, QuickConfigModule.ID);
-            config.save();
-        } catch (Throwable ignored) {
-        }
     }
-}

@@ -1,10 +1,10 @@
-package com.example.minimal.hud;
+package com.konkors.autismpvp.hud;
 
-import com.example.minimal.MinimalAddon;
-import com.example.minimal.modules.KnockbackDelayModule;
+import com.konkors.autismpvp.AutismPVP;
+import com.konkors.autismpvp.modules.KnockbackDelayModule;
 
 public final class KnockbackDelayIndicatorHud extends FlashIndicatorHud {
-    public static final String ID = MinimalAddon.ID + ":knockback-delay-indicator";
+    public static final String ID = AutismPVP.ID + ":knockback-delay-indicator";
 
     @Override public String id() { return ID; }
     @Override public String label() { return "KnockbackDelay Indicator"; }

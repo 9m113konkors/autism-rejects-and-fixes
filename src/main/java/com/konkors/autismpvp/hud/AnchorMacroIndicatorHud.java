@@ -1,10 +1,10 @@
-package com.example.minimal.hud;
+package com.konkors.autismpvp.hud;
 
-import com.example.minimal.MinimalAddon;
-import com.example.minimal.modules.AnchorMacroModule;
+import com.konkors.autismpvp.AutismPVP;
+import com.konkors.autismpvp.modules.AnchorMacroModule;
 
 public final class AnchorMacroIndicatorHud extends FlashIndicatorHud {
-    public static final String ID = MinimalAddon.ID + ":anchor-macro-indicator";
+    public static final String ID = AutismPVP.ID + ":anchor-macro-indicator";
 
     @Override public String id() { return ID; }
     @Override public String label() { return "Anchor Macro Indicator"; }

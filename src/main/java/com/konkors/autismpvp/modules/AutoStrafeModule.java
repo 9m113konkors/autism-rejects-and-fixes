@@ -1,4 +1,4 @@
-package com.example.minimal.modules;
+package com.konkors.autismpvp.modules;
 
 import autismclient.api.module.BoolSetting;
 import autismclient.api.module.EnumSetting;
@@ -7,7 +7,7 @@ import autismclient.modules.KillAuraModule;
 import autismclient.modules.Module;
 import autismclient.modules.ModuleRegistry;
 import autismclient.util.AutismKeyMappingBridge;
-import com.example.minimal.Tier;
+import com.konkors.autismpvp.Tier;
 import net.minecraft.client.KeyMapping;
 import net.minecraft.util.Mth;
 import net.minecraft.world.entity.LivingEntity;
@@ -25,7 +25,7 @@ import java.util.Random;
 // stops, so it never locks your controls.
 public final class AutoStrafeModule extends Module {
 
-    public static final String ID = "autism-minimal-addon-template:auto-strafe";
+    public static final String ID = "autismpvp:auto-strafe";
 
     public enum Direction {
         AROUND_TARGET("Around target"),
@@ -155,9 +155,15 @@ public final class AutoStrafeModule extends Module {
             boolean targetLeft = targetOnLeft(target);
             if (targetLeft != currentLeft && transitionTicksLeft <= 0) {
                 transitionTicksLeft = transitionSmooth.get();
+                if (transitionTicksLeft <= 0) {
+                    currentLeft = targetLeft;
+                }
             }
             if (transitionTicksLeft > 0) {
                 transitionTicksLeft--;
+                if (transitionTicksLeft == 0) {
+                    currentLeft = targetLeft;
+                }
             }
             left = currentLeft;
         } else {

@@ -28,15 +28,20 @@ public final class KillAuraButBetterModule extends Module {
     private enum Phase { IDLE, JUMP }
 
     private final IntSetting chance = add(new IntSetting("chance", "Chance (%)", 100, 0, 100, 5)
-        .group("Timing"));
+        .group("Timing")
+        .description("Chance per eligible hit that the crit-hop fires."));
     private final IntSetting readyScale = add(new IntSetting("ready-scale", "Swing when cooldown at (%)", 80, 50, 100, 5)
-        .group("Timing"));
+        .group("Timing")
+        .description("Attack once the cooldown reaches this percentage, so hits land close to full strength."));
     private final IntSetting minInterval = add(new IntSetting("min-interval", "Min between hops (ticks)", 6, 1, 20, 1)
-        .group("Timing"));
+        .group("Timing")
+        .description("Minimum ticks between crit-hops so it never spams jumps."));
     private final IntSetting minStill = add(new IntSetting("min-still", "Target still (ticks)", 6, 2, 60, 1)
-        .group("Detection"));
+        .group("Detection")
+        .description("How many ticks a stationary target must sit still before it gets crit-hopped."));
     private final DoubleSetting tolerance = add(new DoubleSetting("tolerance", "Still tolerance (blocks)", 0.05, 0.0, 0.5, 0.01)
-        .group("Detection"));
+        .group("Detection")
+        .description("Maximum movement per tick a target can make and still count as 'still'."));
     private final IntSetting cpsMin = add(new IntSetting("cps-min", "CPS min", 15, 4, 20, 1)
         .group("Clicking").description("Lowest clicks per second while attacking."));
     private final IntSetting cpsMax = add(new IntSetting("cps-max", "CPS max", 18, 4, 20, 1)

@@ -1,10 +1,10 @@
-package com.example.minimal.hud;
+package com.konkors.autismpvp.hud;
 
-import com.example.minimal.MinimalAddon;
-import com.example.minimal.modules.AutoCritoutModule;
+import com.konkors.autismpvp.AutismPVP;
+import com.konkors.autismpvp.modules.AutoCritoutModule;
 
 public final class AutoCritoutIndicatorHud extends FlashIndicatorHud {
-    public static final String ID = MinimalAddon.ID + ":auto-critout-indicator";
+    public static final String ID = AutismPVP.ID + ":auto-critout-indicator";
 
     @Override public String id() { return ID; }
     @Override public String label() { return "Auto Critout Indicator"; }

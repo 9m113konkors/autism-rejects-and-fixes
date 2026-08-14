@@ -1,4 +1,4 @@
-package com.example.minimal.modules;
+package com.konkors.autismpvp.modules;
 
 import autismclient.api.module.BoolSetting;
 import autismclient.api.module.ColorSetting;
@@ -12,7 +12,7 @@ import autismclient.modules.ModuleRegistry;
 import autismclient.modules.PackHideState;
 import autismclient.modules.TeamsModule;
 import autismclient.util.AutismUiScale;
-import com.example.minimal.Tier;
+import com.konkors.autismpvp.Tier;
 import net.minecraft.client.Camera;
 import net.minecraft.client.gui.GuiGraphicsExtractor;
 import net.minecraft.network.chat.Component;
@@ -35,7 +35,7 @@ import java.util.Locale;
 // a name/health/distance tag inside the box.
 public final class WorldChamsModule extends Module {
 
-    public static final String ID = "autism-minimal-addon-template:world-chams";
+    public static final String ID = "autismpvp:world-chams";
 
     private final BoolSetting players = add(new BoolSetting("players", "Players", true)
         .group("Targets")
@@ -56,14 +56,17 @@ public final class WorldChamsModule extends Module {
         .group("Display")
         .description("Draw name, health and distance inside the box."));
     private final ColorSetting boxColor = add(new ColorSetting("box-color", "Box Color", 0x66FF0000)
-        .group("Display"));
+        .group("Display")
+        .description("Color (with alpha) of the box and info text for everyone else."));
     private final ColorSetting friendColor = add(new ColorSetting("friend-color", "Friend Color", 0x6600FF00)
         .group("Display")
         .description("Color for teammates and friends."));
     private final ColorSetting tracerColor = add(new ColorSetting("tracer-color", "Tracer Color", 0x88FF5555)
-        .group("Display"));
+        .group("Display")
+        .description("Color of the tracer lines."));
     private final DoubleSetting maxDist = add(new DoubleSetting("max-distance", "Max Distance", 48.0, 8.0, 256.0, 1.0)
-        .group("Display"));
+        .group("Display")
+        .description("Only ESP entities within this distance."));
 
     private int renderedEntities;
     private static final int RED = 0xFFFF1919;

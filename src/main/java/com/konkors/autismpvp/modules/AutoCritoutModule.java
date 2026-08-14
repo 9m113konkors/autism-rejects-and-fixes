@@ -1,4 +1,4 @@
-package com.example.minimal.modules;
+package com.konkors.autismpvp.modules;
 
 import autismclient.api.module.BoolSetting;
 import autismclient.api.module.DoubleSetting;
@@ -6,7 +6,7 @@ import autismclient.api.module.IntSetting;
 import autismclient.modules.Module;
 import autismclient.modules.ModuleRegistry;
 import autismclient.util.AutismKeyMappingBridge;
-import com.example.minimal.Tier;
+import com.konkors.autismpvp.Tier;
 import net.minecraft.world.entity.LivingEntity;
 
 import java.util.Random;
@@ -19,26 +19,32 @@ import java.util.Random;
 // knockback farm look like.
 public final class AutoCritoutModule extends Module {
 
-    public static final String ID = "autism-minimal-addon-template:auto-critout";
+    public static final String ID = "autismpvp:auto-critout";
     public static volatile long lastCritMs;
 
     private enum Phase { IDLE, HOP }
 
     private final IntSetting chance = add(new IntSetting("chance", "Chance (%)", 100, 0, 100, 5)
-        .group("Timing"));
+        .group("Timing")
+        .description("Chance per eligible hit that the crit-hop fires. Lower = occasionally misses the crit."));
     private final IntSetting minInterval = add(new IntSetting("min-interval", "Min between hops (ticks)", 6, 1, 20, 1)
-        .group("Timing"));
+        .group("Timing")
+        .description("Minimum ticks between crit-hops so it never spams jumps."));
     private final IntSetting minHold = add(new IntSetting("min-hold", "Min hop hold (ticks)", 1, 1, 3, 1)
-        .group("Timing"));
+        .group("Timing")
+        .description("Minimum time the jump key is held during the hop."));
     private final IntSetting maxHold = add(new IntSetting("max-hold", "Max hop hold (ticks)", 2, 1, 3, 1)
-        .group("Timing"));
+        .group("Timing")
+        .description("Maximum time the jump key is held. A random value between min and max is chosen per hop."));
     private final IntSetting minStill = add(new IntSetting("min-still", "Target still (ticks)", 6, 2, 60, 1)
-        .group("Detection"));
+        .group("Detection")
+        .description("How many ticks a stationary target must sit still before it gets crit-hopped."));
     private final DoubleSetting tolerance = add(new DoubleSetting("tolerance", "Still tolerance (blocks)", 0.05, 0.0, 0.5, 0.01)
-        .group("Detection"));
-    private final BoolSetting requireFall = add(new BoolSetting("require-fall", "Require falling", false)
+        .group("Detection")
+        .description("Maximum movement per tick a target can make and still count as 'still'."));
+    private final BoolSetting requireFall = add(new BoolSetting("require-fall", "Require falling", true)
         .group("Anti-Cheat")
-        .description("Only hop when you are falling (negative Y motion), not when jumping up. Grim only registers crits during a descent, so this prevents false crits that ACs flag. Disable if you want to crit right off a jump."));
+        .description("On 1.9+ a hit only crits while you are coming BACK DOWN from the jump (the server checks fallDistance > 0, which is never true during the ascent). On: the click waits until you are descending, so it always crits on modern servers. Off: clicks right after the hop for the old 1.8-style 'up hit' (no crit on Grim/1.9+)."));
     private final BoolSetting preDelay = add(new BoolSetting("pre-delay", "Pre delay", false)
         .group("Anti-Cheat")
         .description("Add a 1-tick delay after deciding to hop before actually jumping. Spreads out the jump-attack timing so it reads less like a scripted 1-tick window on every hit."));
@@ -57,6 +63,7 @@ public final class AutoCritoutModule extends Module {
     private double lastY;
     private double lastZ;
     private int stillTicks;
+    private int fallWait;
 
     public AutoCritoutModule() {
         super(ID, "Auto Critout", "Hops before your swings so stationary targets take crits. Works together with the addon's BetterAutoClicker in both of its modes.");
@@ -117,8 +124,26 @@ public final class AutoCritoutModule extends Module {
             sinceJump--;
         }
         if (phase == Phase.HOP) {
-            if (!hopReady && --ticksLeft <= 0) {
+            if (!hopReady) {
+                if (--ticksLeft > 0) {
+                    return;
+                }
+                releaseJump();
                 hopReady = true;
+                if (requireFall.get()) {
+                    // The click must wait for the descent: on 1.9+ a hit on the way up is not a crit.
+                    hopReady = false;
+                    fallWait = 6;
+                }
+            }
+            if (!hopReady && requireFall.get()) {
+                double vy = MC.player.getDeltaMovement().y;
+                if (vy < -0.05) {
+                    hopReady = true;
+                } else if (--fallWait <= 0) {
+                    // Fallback: never softlock the clicker on a weird drop (levitation, bubble column).
+                    hopReady = true;
+                }
             }
             return;
         }
@@ -194,6 +219,7 @@ public final class AutoCritoutModule extends Module {
         }
         phase = Phase.IDLE;
         hopReady = false;
+        fallWait = 0;
         pendingTarget = null;
         pendingHopTarget = null;
         preDelayTicks = 0;
@@ -241,6 +267,7 @@ public final class AutoCritoutModule extends Module {
         }
         phase = Phase.IDLE;
         hopReady = false;
+        fallWait = 0;
         pendingTarget = null;
         pendingHopTarget = null;
         preDelayTicks = 0;

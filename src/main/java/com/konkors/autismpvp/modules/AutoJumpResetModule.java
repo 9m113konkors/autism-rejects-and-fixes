@@ -16,20 +16,26 @@ public final class AutoJumpResetModule extends Module {
     private enum Phase { IDLE, DELAY, HOLD }
 
     private final IntSetting chance = add(new IntSetting("chance", "Chance (%)", 100, 0, 100, 5)
-        .group("Timing"));
+        .group("Timing")
+        .description("Chance per hit that the jump reset fires at all. Lower values feel like a human who sometimes forgets to reset."));
     private final IntSetting minDelay = add(new IntSetting("min-delay", "Min reaction (ticks)", 0, 0, 4, 1)
-        .group("Timing"));
+        .group("Timing")
+        .description("Minimum reaction time after the hit before the jump starts (0 = instant)."));
     private final IntSetting maxDelay = add(new IntSetting("max-delay", "Max reaction (ticks)", 1, 0, 4, 1)
-        .group("Timing"));
+        .group("Timing")
+        .description("Maximum reaction time. A random value between min and max is chosen per hit to look human."));
     private final IntSetting minHold = add(new IntSetting("min-hold", "Min hold (ticks)", 1, 1, 3, 1)
-        .group("Timing"));
+        .group("Timing")
+        .description("Minimum time the jump key stays pressed."));
     private final IntSetting maxHold = add(new IntSetting("max-hold", "Max hold (ticks)", 2, 1, 3, 1)
-        .group("Timing"));
+        .group("Timing")
+        .description("Maximum time the jump key stays pressed. Longer holds give a bigger, more obvious reset."));
     private final IntSetting accuracy = add(new IntSetting("accuracy", "Accuracy (%)", 85, 0, 100, 5)
         .group("Timing")
         .description("How often the reset is perfectly on time. The remaining percentage reacts a couple of ticks late, which reads as a slow human reaction instead of a perfect scripted jump every single hit."));
     private final BoolSetting requireGround = add(new BoolSetting("require-ground", "Require on ground", true)
-        .group("Behavior"));
+        .group("Behavior")
+        .description("Only reset while on the ground. Off lets it attempt mid-air resets too."));
 
     private final Random random = new Random();
 

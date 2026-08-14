@@ -35,22 +35,29 @@ public final class AutoWTapModule extends Module {
     private enum Phase { IDLE, DELAY, HOLD }
 
     private final EnumSetting<Mode> mode = add(new EnumSetting<>("mode", "Mode", Mode.SPRINT_TAP, Mode.values())
-        .group("General"));
+        .group("General")
+        .description("Sprint-Tap releases W after each hit to keep sprint; Sneak-Tap briefly sneaks instead, which also resets reach combos and looks like a block-hitter."));
     private final IntSetting delayTicks = add(new IntSetting("delay", "Delay (ticks)", 0, 0, 4, 1)
-        .group("Timing"));
+        .group("Timing")
+        .description("Ticks to wait after the hit lands before tapping. 0 = tap immediately after every hit."));
     private final IntSetting minHold = add(new IntSetting("min-hold", "Min hold (ticks)", 1, 1, 3, 1)
-        .group("Timing"));
+        .group("Timing")
+        .description("Minimum length of the release, in ticks."));
     private final IntSetting maxHold = add(new IntSetting("max-hold", "Max hold (ticks)", 2, 1, 5, 1)
-        .group("Timing"));
+        .group("Timing")
+        .description("Maximum length of the release. A random value between min and max is chosen per tap."));
     private final IntSetting chance = add(new IntSetting("chance", "Chance (%)", 100, 0, 100, 5)
-        .group("Timing"));
+        .group("Timing")
+        .description("Chance per hit that a tap happens. Lower feels like a player who occasionally forgets to w-tap."));
     private final IntSetting accuracy = add(new IntSetting("accuracy", "Accuracy (%)", 85, 0, 100, 5)
         .group("Timing")
         .description("How often the tap is perfectly on time. The remaining percentage taps a tick or two late, which reads as a human reaction instead of a scripted tap on every hit."));
     private final BoolSetting requireSprint = add(new BoolSetting("require-sprint", "Require sprinting", true)
-        .group("Behavior"));
+        .group("Behavior")
+        .description("Only tap while sprinting, so the reset actually registers."));
     private final BoolSetting requireCooldown = add(new BoolSetting("require-cooldown", "Require full cooldown (1.9+ servers)", false)
-        .group("Behavior"));
+        .group("Behavior")
+        .description("Only tap when the attack cooldown is ready. On 1.9+ servers the cooldown decides when hits land, so this keeps the tap aligned with real hits."));
 
     private final Random random = new Random();
 

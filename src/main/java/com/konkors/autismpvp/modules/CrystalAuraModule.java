@@ -1,4 +1,4 @@
-package com.example.minimal.modules;
+package com.konkors.autismpvp.modules;
 
 import autismclient.api.module.BoolSetting;
 import autismclient.api.module.DoubleSetting;
@@ -8,7 +8,7 @@ import autismclient.modules.Module;
 import autismclient.modules.ModuleRegistry;
 import autismclient.util.AutismInventoryHelper;
 import autismclient.util.AutismRotationUtil;
-import com.example.minimal.Tier;
+import com.konkors.autismpvp.Tier;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.tags.ItemTags;
@@ -32,7 +32,7 @@ import java.util.Random;
 // on a steady cycle with humanized jitter. Hostile like the crystal macro, but fully automatic.
 public final class CrystalAuraModule extends Module {
 
-    public static final String ID = "autism-minimal-addon-template:crystal-aura";
+    public static final String ID = "autismpvp:crystal-aura";
 
     private final IntSetting range = add(new IntSetting("range", "Target range (blocks)", 6, 3, 12, 1)
         .group("Targeting")
@@ -146,8 +146,9 @@ public final class CrystalAuraModule extends Module {
 
         EndCrystal crystal = findCrystal(spot);
         if (crystal == null) {
-            placeAt(spot);
-            cooldown = Math.max(0, detonateDelay.get());
+            if (placeAt(spot)) {
+                cooldown = Math.max(0, detonateDelay.get());
+            }
         } else {
             detonate(crystal);
             cooldown = Math.max(0, placeDelay.get()) + jitter();
@@ -221,10 +222,10 @@ public final class CrystalAuraModule extends Module {
             <= MC.player.blockInteractionRange() * MC.player.blockInteractionRange();
     }
 
-    private void placeAt(BlockPos spot) {
+    private boolean placeAt(BlockPos spot) {
         BlockPos surface = spot.below();
         if (autoSelect.get() && !selectItem(Items.END_CRYSTAL)) {
-            return;
+            return false;
         }
         aimAt(Vec3.atCenterOf(spot));
         BlockHitResult hit = new BlockHitResult(Vec3.atCenterOf(surface), Direction.UP, surface, false);
@@ -232,6 +233,7 @@ public final class CrystalAuraModule extends Module {
         if (result.consumesAction()) {
             MC.player.swing(InteractionHand.MAIN_HAND);
         }
+        return result.consumesAction();
     }
 
     private void detonate(EndCrystal crystal) {

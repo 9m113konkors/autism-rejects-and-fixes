@@ -1,4 +1,4 @@
-package com.example.minimal.modules;
+package com.konkors.autismpvp.modules;
 
 import autismclient.api.module.BoolSetting;
 import autismclient.api.module.IntSetting;
@@ -6,7 +6,7 @@ import autismclient.modules.KillAuraModule;
 import autismclient.modules.Module;
 import autismclient.modules.ModuleRegistry;
 import autismclient.util.macro.PingSpoofController;
-import com.example.minimal.Tier;
+import com.konkors.autismpvp.Tier;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.phys.AABB;
@@ -19,7 +19,7 @@ import java.util.List;
 // as extra reach when you close the gap mid-fight. Weak-server module; not for Grim.
 public final class BacktrackModule extends Module {
 
-    public static final String ID = "autism-minimal-addon-template:backtrack";
+    public static final String ID = "autismpvp:backtrack";
 
     // Unique owner id so the override never collides with the client's own PingSpoof module slot.
     private static final long OWNER = 0x42_41_43_4B_54_52_4B_4CL; // "BACKTRK"

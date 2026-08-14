@@ -1,4 +1,4 @@
-package com.example.minimal.modules;
+package com.konkors.autismpvp.modules;
 
 import autismclient.api.module.BoolSetting;
 import autismclient.api.module.IntSetting;
@@ -6,7 +6,7 @@ import autismclient.modules.Module;
 import autismclient.modules.ModuleRegistry;
 import autismclient.util.AutismInventoryHelper;
 import autismclient.util.AutismRotationUtil;
-import com.example.minimal.Tier;
+import com.konkors.autismpvp.Tier;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
@@ -26,7 +26,7 @@ import net.minecraft.world.phys.Vec3;
 // from your hotbar (and optionally switches back to a sword after every detonation).
 public final class CrystalMacroModule extends Module {
 
-    public static final String ID = "autism-minimal-addon-template:crystal-macro";
+    public static final String ID = "autismpvp:crystal-macro";
 
     private enum Phase {
         PLACE,
@@ -123,9 +123,10 @@ public final class CrystalMacroModule extends Module {
                 if (MC.player.distanceToSqr(Vec3.atCenterOf(target.pos)) > range.get() * (double) range.get()) {
                     break;
                 }
-                placeCrystal(target);
-                phase = Phase.WAIT_BREAK;
-                phaseTicks = Math.max(0, breakDelay.get());
+                if (placeCrystal(target)) {
+                    phase = Phase.WAIT_BREAK;
+                    phaseTicks = Math.max(0, breakDelay.get());
+                }
             }
             case WAIT_BREAK -> {
                 if (--phaseTicks <= 0) {
@@ -171,19 +172,20 @@ public final class CrystalMacroModule extends Module {
         return null;
     }
 
-    private void placeCrystal(Resolved target) {
+    private boolean placeCrystal(Resolved target) {
         BlockHitResult blockHit = target.blockHit;
         if (blockHit == null) {
-            return;
+            return false;
         }
         if (autoSelect.get() && !selectItem(Items.END_CRYSTAL)) {
-            return;
+            return false;
         }
         aimAt(Vec3.atCenterOf(target.pos));
         InteractionResult result = MC.gameMode.useItemOn(MC.player, InteractionHand.MAIN_HAND, blockHit);
         if (result.consumesAction()) {
             MC.player.swing(InteractionHand.MAIN_HAND);
         }
+        return result.consumesAction();
     }
 
     private EndCrystal findCrystal(BlockPos pos) {

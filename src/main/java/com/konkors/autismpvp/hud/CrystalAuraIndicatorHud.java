@@ -1,10 +1,10 @@
-package com.example.minimal.hud;
+package com.konkors.autismpvp.hud;
 
-import com.example.minimal.MinimalAddon;
-import com.example.minimal.modules.CrystalAuraModule;
+import com.konkors.autismpvp.AutismPVP;
+import com.konkors.autismpvp.modules.CrystalAuraModule;
 
 public final class CrystalAuraIndicatorHud extends FlashIndicatorHud {
-    public static final String ID = MinimalAddon.ID + ":crystal-aura-indicator";
+    public static final String ID = AutismPVP.ID + ":crystal-aura-indicator";
 
     @Override public String id() { return ID; }
     @Override public String label() { return "Crystal Aura Indicator"; }

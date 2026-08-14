@@ -1,4 +1,4 @@
-package com.example.minimal.mixin;
+package com.konkors.autismpvp.mixin;
 
 import autismclient.api.module.Setting;
 import autismclient.gui.vanillaui.UiBounds;
@@ -6,7 +6,7 @@ import autismclient.gui.vanillaui.UiContext;
 import autismclient.gui.vanillaui.UiRenderer;
 import autismclient.gui.vanillaui.module.VanillaModuleMenuController;
 import autismclient.modules.Module;
-import com.example.minimal.api.RangeSetting;
+import com.konkors.autismpvp.api.RangeSetting;
 import net.minecraft.client.gui.GuiGraphicsExtractor;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;

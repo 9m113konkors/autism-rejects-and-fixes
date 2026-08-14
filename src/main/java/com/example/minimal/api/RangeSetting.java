@@ -1,4 +1,4 @@
-package com.example.minimal.api;
+package com.konkors.autismpvp.api;
 
 import autismclient.api.module.Kind;
 import autismclient.api.module.Setting;
